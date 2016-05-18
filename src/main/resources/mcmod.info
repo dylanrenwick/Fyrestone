@@ -1,0 +1,13 @@
+[
+{
+  "modid": "Fyrestone",
+  "name": "Fyrestone",
+  "description": "Fire themed ore and new machines",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "authorList": ["GunnerWolf"],
+  "credits": "MysteriousAges and the MagicBees devs",
+  "logoFile": "",
+}
+]
