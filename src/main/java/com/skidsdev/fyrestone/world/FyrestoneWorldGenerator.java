@@ -22,15 +22,15 @@ public class FyrestoneWorldGenerator implements IWorldGenerator
 	
 	private void generateOre(World world, Random random, int chunkX, int chunkZ)
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 2; i++)
 		{
 			int x = chunkX + random.nextInt(16);
-			int y = random.nextInt(64);
+			int y = random.nextInt(48);
 			int z = chunkZ + random.nextInt(16);
 			
 			BlockPos pos = new BlockPos(x, y, z);
 			
-			new WorldGenMinable(ModBlocks.blockFyrestoneOre.getDefaultState(), 10).generate(world, random, pos);
+			new WorldGenMinable(ModBlocks.blockFyrestoneOre.getDefaultState(), 8).generate(world, random, pos);
 		}
 	}
 }
