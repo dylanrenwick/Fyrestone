@@ -1,0 +1,6 @@
+< en_US.lang - English localization file for the mod Fyrestone >
+item.fyrestone:itemFyrestoneChunk.name=Fyrestone Chunk
+item.fyrestone:itemFyrestoneIngot.name=Fyrestone Ingot
+item.fyrestone:itemFyrestoneSword.name=Fyrestone Sword
+tile.fyrestone:blockFyrestoneOre.name=Fyrestone Ore
+tile.fyrestone:blockFyrestoneBlock.name=Fyrestone Block

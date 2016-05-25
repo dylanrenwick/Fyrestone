@@ -1,22 +1,41 @@
 package com.skidsdev.fyrestone;
 
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import com.skidsdev.fyrestone.utils.VersionInfo;
 
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
 @Mod(
-		modid = VersionInfo.ModName, 
+		modid = VersionInfo.ModId,
+		name = VersionInfo.ModName, 
 		version = VersionInfo.Version
 )
 public class Fyrestone
-{
-    private Config modConfig;
+{    
+    @SidedProxy(clientSide="com.skidsdev.fyrestone.ClientProxy", serverSide="com.skidsdev.fyrestone.ServerProxy")
+    public static CommonProxy proxy;
+    
+    public static Fyrestone instance = new Fyrestone();
     
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event)
+    public void preInit(FMLPreInitializationEvent e)
     {
-		this.modConfig = new Config(event.getSuggestedConfigurationFile());
+    	proxy.preInit(e);
+    }
+    
+    @EventHandler
+    public void init(FMLInitializationEvent e)
+    {
+    	proxy.init(e);
+    }
+    
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent e)
+    {
+    	proxy.postInit(e);
     }
 }
