@@ -1,0 +1,83 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "all": "fyrestone:blocks/blockFramedFurnaceFrontWood"
+        },
+        "model": "minecraft:orientable"
+    },
+    "variants": {
+        "facing": {
+            "north": {},
+            "south": { "y": 180 },
+            "west":  { "y": 270 },
+            "east":  { "y":  90 }
+        },
+        "frame_type": {
+            "wood": {
+                "textures": {
+                    "front":    "fyrestone:blocks/blockFramedFurnaceFrontWood",
+                    "side":     "fyrestone:blocks/blockFramedFurnaceSideWood",
+                    "top":      "fyrestone:blocks/blockFramedFurnaceTopWood",
+                    "bottom":   "fyrestone:blocks/blockFramedFurnaceTopWood"
+                }
+            },
+            "stone": {
+                "textures": {
+                    "front":    "fyrestone:blocks/blockFramedFurnaceFrontStone",
+                    "side":     "fyrestone:blocks/blockFramedFurnaceSideStone",
+                    "top":      "fyrestone:blocks/blockFramedFurnaceTopStone",
+                    "bottom":   "fyrestone:blocks/blockFramedFurnaceTopStone"
+                }
+            },
+            "iron": {
+                "textures": {
+                    "front":    "fyrestone:blocks/blockFramedFurnaceFrontIron",
+                    "side":     "fyrestone:blocks/blockFramedFurnaceSideIron",
+                    "top":      "fyrestone:blocks/blockFramedFurnaceTopIron",
+                    "bottom":   "fyrestone:blocks/blockFramedFurnaceTopIron"
+                }
+            },
+            "netherrack": {
+                "textures": {
+                    "front":    "fyrestone:blocks/blockFramedFurnaceFrontNetherrack",
+                    "side":     "fyrestone:blocks/blockFramedFurnaceSideNetherrack",
+                    "top":      "fyrestone:blocks/blockFramedFurnaceTopNetherrack",
+                    "bottom":   "fyrestone:blocks/blockFramedFurnaceTopNetherrack"
+                }
+            },
+            "nether_quartz": {
+                "textures": {
+                    "front":    "fyrestone:blocks/blockFramedFurnaceFrontQuartz",
+                    "side":     "fyrestone:blocks/blockFramedFurnaceSideQuartz",
+                    "top":      "fyrestone:blocks/blockFramedFurnaceTopQuartz",
+                    "bottom":   "fyrestone:blocks/blockFramedFurnaceTopQuartz"
+                }
+            },
+            "gold": {
+                "textures": {
+                    "front":    "fyrestone:blocks/blockFramedFurnaceFrontGold",
+                    "side":     "fyrestone:blocks/blockFramedFurnaceSideGold",
+                    "top":      "fyrestone:blocks/blockFramedFurnaceTopGold",
+                    "bottom":   "fyrestone:blocks/blockFramedFurnaceTopGold"
+                }
+            },
+            "diamond": {
+                "textures": {
+                    "front":    "fyrestone:blocks/blockFramedFurnaceFrontDiamond",
+                    "side":     "fyrestone:blocks/blockFramedFurnaceSideDiamond",
+                    "top":      "fyrestone:blocks/blockFramedFurnaceTopDiamond",
+                    "bottom":   "fyrestone:blocks/blockFramedFurnaceTopDiamond"
+                }
+            },
+            "emerald": {
+                "textures": {
+                    "front":    "fyrestone:blocks/blockFramedFurnaceFrontEmerald",
+                    "side":     "fyrestone:blocks/blockFramedFurnaceSideEmerald",
+                    "top":      "fyrestone:blocks/blockFramedFurnaceTopEmerald",
+                    "bottom":   "fyrestone:blocks/blockFramedFurnaceTopEmerald"
+                }
+            }
+        }
+    }
+}

@@ -4,3 +4,4 @@ item.fyrestone:itemFyrestoneIngot.name=Fyrestone Ingot
 item.fyrestone:itemFyrestoneSword.name=Fyrestone Sword
 tile.fyrestone:blockFyrestoneOre.name=Fyrestone Ore
 tile.fyrestone:blockFyrestoneBlock.name=Fyrestone Block
+tile.fyrestone:blockFramedFurnace.name=Framed Furnace
