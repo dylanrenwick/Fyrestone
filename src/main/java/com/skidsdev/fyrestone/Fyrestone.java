@@ -4,6 +4,7 @@ import com.skidsdev.fyrestone.utils.VersionInfo;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -19,7 +20,8 @@ public class Fyrestone
     @SidedProxy(clientSide="com.skidsdev.fyrestone.ClientProxy", serverSide="com.skidsdev.fyrestone.ServerProxy")
     public static CommonProxy proxy;
     
-    public static Fyrestone instance = new Fyrestone();
+    @Instance
+    public static Fyrestone instance;
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent e)
