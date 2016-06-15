@@ -1,6 +1,6 @@
 package com.skidsdev.fyrestone.client.render.items;
 
-import com.skidsdev.fyrestone.item.ModItems;
+import com.skidsdev.fyrestone.item.ItemRegister;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -11,9 +11,9 @@ public class ItemRenderRegister
 {
 	public static void registerItemRenderer()
 	{
-		reg(ModItems.itemFyrestoneChunk);
-		reg(ModItems.itemFyrestoneIngot);
-		reg(ModItems.itemFyrestoneSword);
+		reg(ItemRegister.itemFyrestoneChunk);
+		reg(ItemRegister.itemFyrestoneIngot);
+		reg(ItemRegister.itemFyrestoneSword);
 	}
 	
 	public static void reg(Item item)

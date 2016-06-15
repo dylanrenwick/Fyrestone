@@ -1,6 +1,6 @@
 package com.skidsdev.fyrestone.client.render.blocks;
 
-import com.skidsdev.fyrestone.block.ModBlocks;
+import com.skidsdev.fyrestone.block.BlockRegister;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -12,8 +12,9 @@ public final class BlockRenderRegister
 {
 	public static void registerBlockRenderer()
 	{
-		reg(ModBlocks.blockFyrestoneOre);
-		reg(ModBlocks.blockFyrestoneBlock);
+		reg(BlockRegister.blockFyrestoneOre);
+		reg(BlockRegister.blockFyrestoneBlock);
+		reg(BlockRegister.blockFramedFurnace);
 	}
 	
 	public static void reg(Block block)

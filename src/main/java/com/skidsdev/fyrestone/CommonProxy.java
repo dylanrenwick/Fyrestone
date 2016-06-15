@@ -1,6 +1,7 @@
 package com.skidsdev.fyrestone;
 
 import com.skidsdev.fyrestone.world.FyrestoneWorldGenerator;
+import com.skidsdev.fyrestone.tileentity.TileEntityFramedFurnace;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -18,6 +19,7 @@ public class CommonProxy
 		this.modConfig.setupItems();
 		this.modConfig.setupBlocks();
 		this.modConfig.setupCrafting();
+		GameRegistry.registerTileEntity(TileEntityFramedFurnace.class, "framedfurnace");
 	}
 	
 	public void init(FMLInitializationEvent e)

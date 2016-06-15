@@ -3,8 +3,8 @@ package com.skidsdev.fyrestone;
 import java.io.File;
 
 import com.skidsdev.fyrestone.block.BlockFyrestoneOre;
-import com.skidsdev.fyrestone.block.ModBlocks;
-import com.skidsdev.fyrestone.item.ModItems;
+import com.skidsdev.fyrestone.block.BlockRegister;
+import com.skidsdev.fyrestone.item.ItemRegister;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
@@ -37,22 +37,22 @@ public class Config
 	
 	public void setupBlocks()
 	{
-		ModBlocks.createBlocks();
+		BlockRegister.createBlocks();
 	}
 	
 	public void setupItems()
 	{
-		ModItems.createItems();
+		ItemRegister.createItems();
 	}
 	
 	public void setupCrafting()
 	{
-		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockFyrestoneBlock), new Object[] {"###", "###", "###", '#', ModItems.itemFyrestoneIngot});
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemFyrestoneIngot, 9), ModBlocks.blockFyrestoneBlock);
+		GameRegistry.addRecipe(new ItemStack(BlockRegister.blockFyrestoneBlock), new Object[] {"###", "###", "###", '#', ItemRegister.itemFyrestoneIngot});
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegister.itemFyrestoneIngot, 9), BlockRegister.blockFyrestoneBlock);
 		
-		GameRegistry.addRecipe(new ItemStack(ModItems.itemFyrestoneSword), new Object[] {"#", "#", "=", '#', ModItems.itemFyrestoneIngot, '=', Items.stick});
+		GameRegistry.addRecipe(new ItemStack(ItemRegister.itemFyrestoneSword), new Object[] {"#", "#", "=", '#', ItemRegister.itemFyrestoneIngot, '=', Items.STICK});
 		
-		GameRegistry.addSmelting(ModItems.itemFyrestoneChunk, new ItemStack(ModItems.itemFyrestoneIngot), 0.7F);
+		GameRegistry.addSmelting(ItemRegister.itemFyrestoneChunk, new ItemStack(ItemRegister.itemFyrestoneIngot), 0.7F);
 	}
 	
 	private void processConfigFile()

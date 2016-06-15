@@ -9,7 +9,7 @@ import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import com.skidsdev.fyrestone.block.BlockFyrestoneOre;
-import com.skidsdev.fyrestone.block.ModBlocks;
+import com.skidsdev.fyrestone.block.BlockRegister;
 import com.skidsdev.fyrestone.Config;
 
 public class FyrestoneWorldGenerator implements IWorldGenerator
@@ -30,7 +30,7 @@ public class FyrestoneWorldGenerator implements IWorldGenerator
 			
 			BlockPos pos = new BlockPos(x, y, z);
 			
-			new WorldGenMinable(ModBlocks.blockFyrestoneOre.getDefaultState(), 8).generate(world, random, pos);
+			new WorldGenMinable(BlockRegister.blockFyrestoneOre.getDefaultState(), 8).generate(world, random, pos);
 		}
 	}
 }

@@ -5,7 +5,7 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public final class ModItems 
+public final class ItemRegister 
 {	
 	public static Item itemFyrestoneChunk;
 	public static Item itemFyrestoneIngot;

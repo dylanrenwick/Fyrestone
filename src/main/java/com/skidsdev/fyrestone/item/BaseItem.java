@@ -12,6 +12,6 @@ public class BaseItem extends Item
 		
 		this.setRegistryName(regName);
 		this.setUnlocalizedName(this.getRegistryName().toString());
-		this.setCreativeTab(CreativeTabs.tabMaterials);
+		this.setCreativeTab(CreativeTabs.MATERIALS);
 	}
 }

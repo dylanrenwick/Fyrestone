@@ -2,7 +2,7 @@ package com.skidsdev.fyrestone;
 
 import com.skidsdev.fyrestone.client.render.blocks.BlockRenderRegister;
 import com.skidsdev.fyrestone.client.render.items.ItemRenderRegister;
-import com.skidsdev.fyrestone.item.ModItems;
+import com.skidsdev.fyrestone.item.ItemRegister;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;

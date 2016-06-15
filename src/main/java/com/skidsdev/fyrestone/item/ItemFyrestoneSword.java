@@ -42,8 +42,8 @@ public class ItemFyrestoneSword extends ItemSword
         {
             if (worldIn.isAirBlock(pos))
             {
-                worldIn.playSound(playerIn, pos, SoundEvents.item_flintandsteel_use, SoundCategory.BLOCKS, 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
-                worldIn.setBlockState(pos, Blocks.fire.getDefaultState(), 11);
+                worldIn.playSound(playerIn, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
+                worldIn.setBlockState(pos, Blocks.FIRE.getDefaultState(), 11);
             }
 
             stack.damageItem(2, playerIn);
