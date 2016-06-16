@@ -47,7 +47,7 @@ public class BlockFramedFurnace extends BlockDirectional
     }
 	
 	@Override
-	public boolean hasTileEntity() { return true; }
+	public boolean hasTileEntity(IBlockState state) { return true; }
 	
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
