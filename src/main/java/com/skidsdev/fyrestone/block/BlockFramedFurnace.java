@@ -47,6 +47,9 @@ public class BlockFramedFurnace extends BlockDirectional
     }
 	
 	@Override
+	public boolean hasTileEntity() { return true; }
+	
+	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
 	{
 		TileEntity tileEntity = worldIn.getTileEntity(pos);
