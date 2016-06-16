@@ -1,6 +1,5 @@
 package com.skidsdev.fyrestone.tileentity;
 
-import java.awt.TextComponent;
 import java.util.Arrays;
 
 import com.skidsdev.fyrestone.block.EnumFrameType;
@@ -10,6 +9,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
@@ -19,6 +19,7 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.EnumSkyBlock;
 
 /**
@@ -32,23 +33,18 @@ import net.minecraft.world.EnumSkyBlock;
  * The code is heavily based on TileEntityFurnace.
  */
 public class TileEntityFramedFurnace extends TileEntity implements IInventory, ITickable {
-	public static final int FUEL_SLOTS_COUNT = 1;
-	public static final int INPUT_SLOTS_COUNT = 1;
-	public static final int OUTPUT_SLOTS_COUNT = 1;
-	public static final int TOTAL_SLOTS_COUNT = FUEL_SLOTS_COUNT + INPUT_SLOTS_COUNT + OUTPUT_SLOTS_COUNT;
-
-	public static final int FIRST_FUEL_SLOT = 0;
-	public static final int FIRST_INPUT_SLOT = FIRST_FUEL_SLOT + FUEL_SLOTS_COUNT;
-	public static final int FIRST_OUTPUT_SLOT = FIRST_INPUT_SLOT + INPUT_SLOTS_COUNT;
+	public static final int FUEL_SLOT = 0;
+	public static final int INPUT_SLOT = 1;
+	public static final int OUTPUT_SLOT = 2;	
 	
-	public EnumFrameType FRAME_TYPE = EnumFrameType.WOOD;
+	public EnumFrameType FRAME_TYPE;
 
-	private ItemStack[] itemStacks = new ItemStack[TOTAL_SLOTS_COUNT];
+	private ItemStack[] itemStacks = new ItemStack[3];
 
 	/** The number of burn ticks remaining on the current piece of fuel */
-	private int [] burnTimeRemaining = new int[FUEL_SLOTS_COUNT];
+	private int burnTimeRemaining = 0;
 	/** The initial fuel value of the currently burning fuel (in ticks of burn duration) */
-	private int [] burnTimeInitialValue = new int[FUEL_SLOTS_COUNT];
+	private int burnTimeInitialValue = 0;;
 
 	/**The number of ticks the current item has been cooking*/
 	private short cookTime;
@@ -64,11 +60,17 @@ public class TileEntityFramedFurnace extends TileEntity implements IInventory, I
 	 * @fuelSlot the number of the fuel slot (0..3)
 	 * @return fraction remaining, between 0 - 1
 	 */
-	public double fractionOfFuelRemaining(int fuelSlot)
+	public double fractionOfFuelRemaining()
 	{
-		if (burnTimeInitialValue[fuelSlot] <= 0 ) return 0;
-		double fraction = burnTimeRemaining[fuelSlot] / (double)burnTimeInitialValue[fuelSlot];
+		if (burnTimeInitialValue <= 0 ) return 0;
+		double fraction = burnTimeRemaining / (double)burnTimeInitialValue;
 		return MathHelper.clamp_double(fraction, 0.0, 1.0);
+	}
+	
+	public void setBaseStats()
+	{
+		speedMult = FRAME_TYPE.getSpeedMod();
+		effBonus = FRAME_TYPE.getEfficiencyMod();
 	}
 
 	/**
@@ -76,10 +78,10 @@ public class TileEntityFramedFurnace extends TileEntity implements IInventory, I
 	 * @param fuelSlot the number of the fuel slot (0..3)
 	 * @return seconds remaining
 	 */
-	public int secondsOfFuelRemaining(int fuelSlot)
+	public int secondsOfFuelRemaining()
 	{
-		if (burnTimeRemaining[fuelSlot] <= 0 ) return 0;
-		return burnTimeRemaining[fuelSlot] / 20; // 20 ticks per second
+		if (burnTimeRemaining <= 0 ) return 0;
+		return burnTimeRemaining / 20; // 20 ticks per second
 	}
 
 	/**
@@ -88,11 +90,8 @@ public class TileEntityFramedFurnace extends TileEntity implements IInventory, I
 	 */
 	public int numberOfBurningFuelSlots()
 	{
-		int burningCount = 0;
-		for (int burnTime : burnTimeRemaining) {
-			if (burnTime > 0) ++burningCount;
-		}
-		return burningCount;
+		if (burnTimeRemaining > 0) return 1;
+		return 0;
 	}
 
 	/**
@@ -159,27 +158,28 @@ public class TileEntityFramedFurnace extends TileEntity implements IInventory, I
 	private int burnFuel() {
 		int burningCount = 0;
 		boolean inventoryChanged = false;
-		// Iterate over all the fuel slots
-		for (int i = 0; i < FUEL_SLOTS_COUNT; i++) {
-			int fuelSlotNumber = i + FIRST_FUEL_SLOT;
-			if (burnTimeRemaining[i] > 0) {
-				--burnTimeRemaining[i];
+		
+		if (burnTimeRemaining > 0) 
+		{
+			--burnTimeRemaining;
+			++burningCount;
+		}
+		if (burnTimeRemaining == 0) 
+		{
+			if (itemStacks[FUEL_SLOT] != null && getItemBurnTime(itemStacks[FUEL_SLOT]) > 0) 
+			{
+				// If the stack in this slot is not null and is fuel, set burnTimeRemaining & burnTimeInitialValue to the
+				// item's burn time and decrease the stack size
+				burnTimeRemaining = burnTimeInitialValue = getItemBurnTime(itemStacks[FUEL_SLOT]);
+				--itemStacks[FUEL_SLOT].stackSize;
 				++burningCount;
-			}
-			if (burnTimeRemaining[i] == 0) {
-				if (itemStacks[fuelSlotNumber] != null && getItemBurnTime(itemStacks[fuelSlotNumber]) > 0) {
-					// If the stack in this slot is not null and is fuel, set burnTimeRemaining & burnTimeInitialValue to the
-					// item's burn time and decrease the stack size
-					burnTimeRemaining[i] = burnTimeInitialValue[i] = getItemBurnTime(itemStacks[fuelSlotNumber]);
-					--itemStacks[fuelSlotNumber].stackSize;
-					++burningCount;
-					inventoryChanged = true;
+				inventoryChanged = true;
 				// If the stack size now equals 0 set the slot contents to the items container item. This is for fuel
 				// items such as lava buckets so that the bucket is not consumed. If the item dose not have
 				// a container item getContainerItem returns null which sets the slot contents to null
-					if (itemStacks[fuelSlotNumber].stackSize == 0) {
-						itemStacks[fuelSlotNumber] = itemStacks[fuelSlotNumber].getItem().getContainerItem(itemStacks[fuelSlotNumber]);
-					}
+				if (itemStacks[FUEL_SLOT].stackSize == 0) 
+				{
+					itemStacks[FUEL_SLOT] = itemStacks[FUEL_SLOT].getItem().getContainerItem(itemStacks[FUEL_SLOT]);
 				}
 			}
 		}
@@ -206,41 +206,43 @@ public class TileEntityFramedFurnace extends TileEntity implements IInventory, I
 	 */
 	private boolean smeltItem(boolean performSmelt)
 	{
-		Integer firstSuitableInputSlot = null;
-		Integer firstSuitableOutputSlot = null;
+		Integer firstSuitableInputSlot = -1;
+		Integer firstSuitableOutputSlot = -1;
 		ItemStack result = null;
 
-		// finds the first input slot which is smeltable and whose result fits into an output slot (stacking if possible)
-		for (int inputSlot = FIRST_INPUT_SLOT; inputSlot < FIRST_INPUT_SLOT + INPUT_SLOTS_COUNT; inputSlot++)	{
-			if (itemStacks[inputSlot] != null) {
-				result = getSmeltingResultForItem(itemStacks[inputSlot]);
-  			if (result != null) {
-					// find the first suitable output slot- either empty, or with identical item that has enough space
-					for (int outputSlot = FIRST_OUTPUT_SLOT; outputSlot < FIRST_OUTPUT_SLOT + OUTPUT_SLOTS_COUNT; outputSlot++) {
-						ItemStack outputStack = itemStacks[outputSlot];
-						if (outputStack == null) {
-							firstSuitableInputSlot = inputSlot;
-							firstSuitableOutputSlot = outputSlot;
-							break;
-						}
-
-						if (outputStack.getItem() == result.getItem() && (!outputStack.getHasSubtypes() || outputStack.getMetadata() == outputStack.getMetadata())
-										&& ItemStack.areItemStackTagsEqual(outputStack, result)) {
-							int combinedSize = itemStacks[outputSlot].stackSize + result.stackSize;
-							if (combinedSize <= getInventoryStackLimit() && combinedSize <= itemStacks[outputSlot].getMaxStackSize()) {
-								firstSuitableInputSlot = inputSlot;
-								firstSuitableOutputSlot = outputSlot;
-								break;
-							}
-						}
+		if (itemStacks[INPUT_SLOT] != null) 
+		{
+			result = getSmeltingResultForItem(itemStacks[INPUT_SLOT]);
+			if (result != null) 
+			{
+				ItemStack outputStack = itemStacks[OUTPUT_SLOT];
+				if (outputStack == null) 
+				{
+					firstSuitableInputSlot = INPUT_SLOT;
+					firstSuitableOutputSlot = OUTPUT_SLOT;
+					return performSmelt(performSmelt, firstSuitableInputSlot, firstSuitableOutputSlot, result);
+				}
+	
+				if (outputStack.getItem() == result.getItem() && (!outputStack.getHasSubtypes() || outputStack.getMetadata() == outputStack.getMetadata()) && ItemStack.areItemStackTagsEqual(outputStack, result)) 
+				{
+					int combinedSize = itemStacks[OUTPUT_SLOT].stackSize + result.stackSize;
+					if (combinedSize <= getInventoryStackLimit() && combinedSize <= itemStacks[OUTPUT_SLOT].getMaxStackSize()) 
+					{
+						firstSuitableInputSlot = INPUT_SLOT;
+						firstSuitableOutputSlot = OUTPUT_SLOT;
+						return performSmelt(performSmelt, firstSuitableInputSlot, firstSuitableOutputSlot, result);
 					}
-					if (firstSuitableInputSlot != null) break;
 				}
 			}
 		}
-
-		if (firstSuitableInputSlot == null) return false;
-		if (!performSmelt) return true;
+		
+		return false;
+	}
+	
+	private boolean performSmelt(boolean smeltItem, int firstSuitableInputSlot, int firstSuitableOutputSlot, ItemStack result)
+	{
+		if (firstSuitableInputSlot < 0) return false;
+		if (!smeltItem) return true;
 
 		// alter input and output
 		itemStacks[firstSuitableInputSlot].stackSize--;
@@ -274,7 +276,12 @@ public class TileEntityFramedFurnace extends TileEntity implements IInventory, I
 	// Gets the stack in the given slot
 	@Override
 	public ItemStack getStackInSlot(int i) {
-		return itemStacks[i];
+		if (i + 1 <= itemStacks.length)
+		{
+			return itemStacks[i];
+		}
+		
+		return null;
 	}
 
 	/**
@@ -305,6 +312,7 @@ public class TileEntityFramedFurnace extends TileEntity implements IInventory, I
 	// overwrites the stack in the given slotIndex with the given stack
 	@Override
 	public void setInventorySlotContents(int slotIndex, ItemStack itemstack) {
+		if (slotIndex + 1 > itemStacks.length) return;
 		itemStacks[slotIndex] = itemstack;
 		if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()) {
 			itemstack.stackSize = getInventoryStackLimit();
@@ -383,8 +391,9 @@ public class TileEntityFramedFurnace extends TileEntity implements IInventory, I
 
 		// Save everything else
 		parentNBTTagCompound.setShort("CookTime", cookTime);
-		parentNBTTagCompound.setTag("burnTimeRemaining", new NBTTagIntArray(burnTimeRemaining));
-		parentNBTTagCompound.setTag("burnTimeInitial", new NBTTagIntArray(burnTimeInitialValue));
+		parentNBTTagCompound.setTag("burnTimeRemaining", new NBTTagInt(burnTimeRemaining));
+		parentNBTTagCompound.setTag("burnTimeInitial", new NBTTagInt(burnTimeInitialValue));
+		parentNBTTagCompound.setTag("frameType", new NBTTagInt(FRAME_TYPE.ordinal()));
 		
 		return parentNBTTagCompound;
 	}
@@ -408,8 +417,9 @@ public class TileEntityFramedFurnace extends TileEntity implements IInventory, I
 
 		// Load everything else.  Trim the arrays (or pad with 0) to make sure they have the correct number of elements
 		cookTime = nbtTagCompound.getShort("CookTime");
-		burnTimeRemaining = Arrays.copyOf(nbtTagCompound.getIntArray("burnTimeRemaining"), FUEL_SLOTS_COUNT);
-		burnTimeInitialValue = Arrays.copyOf(nbtTagCompound.getIntArray("burnTimeInitial"), FUEL_SLOTS_COUNT);
+		burnTimeRemaining = nbtTagCompound.getInteger("burnTimeRemaining");
+		burnTimeInitialValue = nbtTagCompound.getInteger("burnTimeInitial");
+		FRAME_TYPE = EnumFrameType.values()[nbtTagCompound.getInteger("frameType")];
 		cachedNumberOfBurningSlots = -1;
 	}
 
@@ -422,7 +432,7 @@ public class TileEntityFramedFurnace extends TileEntity implements IInventory, I
 	// will add a key for this container to the lang file so we can name it in the GUI
 	@Override
 	public String getName() {
-		return "container.mbe31_inventory_furnace.name";
+		return "blockFramedFurnace.name";
 	}
 
 	@Override
@@ -438,17 +448,17 @@ public class TileEntityFramedFurnace extends TileEntity implements IInventory, I
 
 	private static final byte COOK_FIELD_ID = 0;
 	private static final byte FIRST_BURN_TIME_REMAINING_FIELD_ID = 1;
-	private static final byte FIRST_BURN_TIME_INITIAL_FIELD_ID = FIRST_BURN_TIME_REMAINING_FIELD_ID + (byte)FUEL_SLOTS_COUNT;
-	private static final byte NUMBER_OF_FIELDS = FIRST_BURN_TIME_INITIAL_FIELD_ID + (byte)FUEL_SLOTS_COUNT;
+	private static final byte FIRST_BURN_TIME_INITIAL_FIELD_ID = FIRST_BURN_TIME_REMAINING_FIELD_ID + (byte)1;
+	private static final byte NUMBER_OF_FIELDS = FIRST_BURN_TIME_INITIAL_FIELD_ID + (byte)1;
 
 	@Override
 	public int getField(int id) {
 		if (id == COOK_FIELD_ID) return cookTime;
-		if (id >= FIRST_BURN_TIME_REMAINING_FIELD_ID && id < FIRST_BURN_TIME_REMAINING_FIELD_ID + FUEL_SLOTS_COUNT) {
-			return burnTimeRemaining[id - FIRST_BURN_TIME_REMAINING_FIELD_ID];
+		if (id >= FIRST_BURN_TIME_REMAINING_FIELD_ID && id < FIRST_BURN_TIME_REMAINING_FIELD_ID + 1) {
+			return burnTimeRemaining;
 		}
-		if (id >= FIRST_BURN_TIME_INITIAL_FIELD_ID && id < FIRST_BURN_TIME_INITIAL_FIELD_ID + FUEL_SLOTS_COUNT) {
-			return burnTimeInitialValue[id - FIRST_BURN_TIME_INITIAL_FIELD_ID];
+		if (id >= FIRST_BURN_TIME_INITIAL_FIELD_ID && id < FIRST_BURN_TIME_INITIAL_FIELD_ID + 1) {
+			return burnTimeInitialValue;
 		}
 		System.err.println("Invalid field ID in TileInventorySmelting.getField:" + id);
 		return 0;
@@ -459,10 +469,10 @@ public class TileEntityFramedFurnace extends TileEntity implements IInventory, I
 	{
 		if (id == COOK_FIELD_ID) {
 			cookTime = (short)value;
-		} else if (id >= FIRST_BURN_TIME_REMAINING_FIELD_ID && id < FIRST_BURN_TIME_REMAINING_FIELD_ID + FUEL_SLOTS_COUNT) {
-			burnTimeRemaining[id - FIRST_BURN_TIME_REMAINING_FIELD_ID] = value;
-		} else if (id >= FIRST_BURN_TIME_INITIAL_FIELD_ID && id < FIRST_BURN_TIME_INITIAL_FIELD_ID + FUEL_SLOTS_COUNT) {
-			burnTimeInitialValue[id - FIRST_BURN_TIME_INITIAL_FIELD_ID] = value;
+		} else if (id >= FIRST_BURN_TIME_REMAINING_FIELD_ID && id < FIRST_BURN_TIME_REMAINING_FIELD_ID + 1) {
+			burnTimeRemaining = value;
+		} else if (id >= FIRST_BURN_TIME_INITIAL_FIELD_ID && id < FIRST_BURN_TIME_INITIAL_FIELD_ID + 1) {
+			burnTimeInitialValue = value;
 		} else {
 			System.err.println("Invalid field ID in TileInventorySmelting.setField:" + id);
 		}
@@ -505,7 +515,7 @@ public class TileEntityFramedFurnace extends TileEntity implements IInventory, I
 	@Override
 	public ITextComponent getDisplayName() {
 		// TODO Auto-generated method stub
-		return null;
+		return new TextComponentString(getName());
 	}
 
 

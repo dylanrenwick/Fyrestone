@@ -23,14 +23,11 @@ import net.minecraft.world.World;
 public class BlockFramedFurnace extends BlockDirectional
 {	
 	public static final PropertyEnum FRAME_TYPE = PropertyEnum.create("frame_type", EnumFrameType.class);
-	public EnumFrameType frameType;
     public boolean isActive;
 	
 	public BlockFramedFurnace()
 	{
 		super("blockFramedFurnace", Material.ROCK, 2.5f, 30.0f);
-		
-		frameType = EnumFrameType.WOOD;
 		isActive = false;
 	}
 
@@ -65,7 +62,14 @@ public class BlockFramedFurnace extends BlockDirectional
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
 	{
-		//frameType = EnumFrameType.values()[ItemNBTHelper.getInt(stack, "frame_type", 0)];
+		TileEntity tileEntity = worldIn.getTileEntity(pos);
+		
+		if (tileEntity != null && tileEntity instanceof TileEntityFramedFurnace)
+		{
+			int itemNBT = ItemNBTHelper.getInt(stack, "frameType", 0);
+			((TileEntityFramedFurnace)tileEntity).FRAME_TYPE = EnumFrameType.values()[itemNBT];
+			((TileEntityFramedFurnace)tileEntity).setBaseStats();
+		}
 	}
 	
 	@Override

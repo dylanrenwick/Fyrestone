@@ -43,9 +43,9 @@ public class ContainerInventoryFurnace extends Container {
 	private final int PLAYER_INVENTORY_SLOT_COUNT = PLAYER_INVENTORY_COLUMN_COUNT * PLAYER_INVENTORY_ROW_COUNT;
 	private final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT;
 
-	public final int FUEL_SLOTS_COUNT = 4;
-	public final int INPUT_SLOTS_COUNT = 5;
-	public final int OUTPUT_SLOTS_COUNT = 5;
+	public final int FUEL_SLOTS_COUNT = 1;
+	public final int INPUT_SLOTS_COUNT = 1;
+	public final int OUTPUT_SLOTS_COUNT = 1;
 	public final int FURNACE_SLOTS_COUNT = FUEL_SLOTS_COUNT + INPUT_SLOTS_COUNT + OUTPUT_SLOTS_COUNT;
 
 	// slot index is the unique index for all slots in this container i.e. 0 - 35 for invPlayer then 36 - 49 for tileInventoryFurnace
@@ -66,7 +66,7 @@ public class ContainerInventoryFurnace extends Container {
 		final int SLOT_X_SPACING = 18;
 		final int SLOT_Y_SPACING = 18;
 		final int HOTBAR_XPOS = 8;
-		final int HOTBAR_YPOS = 183;
+		final int HOTBAR_YPOS = 142;
 		// Add the players hotbar to the gui - the [xpos, ypos] location of each item
 		for (int x = 0; x < HOTBAR_SLOT_COUNT; x++) {
 			int slotNumber = x;
@@ -74,7 +74,7 @@ public class ContainerInventoryFurnace extends Container {
 		}
 
 		final int PLAYER_INVENTORY_XPOS = 8;
-		final int PLAYER_INVENTORY_YPOS = 125;
+		final int PLAYER_INVENTORY_YPOS = 84;
 		// Add the rest of the players inventory to the gui
 		for (int y = 0; y < PLAYER_INVENTORY_ROW_COUNT; y++) {
 			for (int x = 0; x < PLAYER_INVENTORY_COLUMN_COUNT; x++) {
@@ -85,29 +85,23 @@ public class ContainerInventoryFurnace extends Container {
 			}
 		}
 
-		final int FUEL_SLOTS_XPOS = 53;
-		final int FUEL_SLOTS_YPOS = 96;
+		final int FUEL_SLOTS_XPOS = 56;
+		final int FUEL_SLOTS_YPOS = 53;
 		// Add the tile fuel slots
-		for (int x = 0; x < FUEL_SLOTS_COUNT; x++) {
-			int slotNumber = x + FIRST_FUEL_SLOT_NUMBER;
-			addSlotToContainer(new SlotFuel(tileInventoryFurnace, slotNumber, FUEL_SLOTS_XPOS + SLOT_X_SPACING * x, FUEL_SLOTS_YPOS));
-		}
+		int slotNumber = 0;
+		addSlotToContainer(new SlotFuel(tileInventoryFurnace, slotNumber, FUEL_SLOTS_XPOS, FUEL_SLOTS_YPOS));
 
-		final int INPUT_SLOTS_XPOS = 26;
-		final int INPUT_SLOTS_YPOS = 24;
+		final int INPUT_SLOTS_XPOS = 56;
+		final int INPUT_SLOTS_YPOS = 17;
 		// Add the tile input slots
-		for (int y = 0; y < INPUT_SLOTS_COUNT; y++) {
-			int slotNumber = y + FIRST_INPUT_SLOT_NUMBER;
-			addSlotToContainer(new SlotSmeltableInput(tileInventoryFurnace, slotNumber, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS+ SLOT_Y_SPACING * y));
-		}
+		slotNumber = 1;
+		addSlotToContainer(new SlotSmeltableInput(tileInventoryFurnace, slotNumber, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS));
 
-		final int OUTPUT_SLOTS_XPOS = 134;
-		final int OUTPUT_SLOTS_YPOS = 24;
+		final int OUTPUT_SLOTS_XPOS = 116;
+		final int OUTPUT_SLOTS_YPOS = 35;
 		// Add the tile output slots
-		for (int y = 0; y < OUTPUT_SLOTS_COUNT; y++) {
-			int slotNumber = y + FIRST_OUTPUT_SLOT_NUMBER;
-			addSlotToContainer(new SlotOutput(tileInventoryFurnace, slotNumber, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS + SLOT_Y_SPACING * y));
-		}
+		slotNumber = 2;
+		addSlotToContainer(new SlotOutput(tileInventoryFurnace, slotNumber, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS));
 	}
 
 	// Checks each tick to make sure the player is still able to access the inventory and if not closes the gui

@@ -18,13 +18,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiFramedFurnace extends GuiContainer {
 
 	// This is the resource location for the background image
-	private static final ResourceLocation texture = new ResourceLocation("minecraftbyexample", "textures/gui/mbe31_inventory_furnace_bg.png");
+	private static final ResourceLocation texture = new ResourceLocation("minecraft", "textures/gui/container/furnace.png");
 	private TileEntityFramedFurnace tileEntity;
 
 	public GuiFramedFurnace(InventoryPlayer invPlayer, TileEntityFramedFurnace tileFurnace) {
 		super(new ContainerInventoryFurnace(invPlayer, tileFurnace));
 
-		// Set the width and height of the gui
 		xSize = 176;
 		ySize = 207;
 
@@ -32,20 +31,19 @@ public class GuiFramedFurnace extends GuiContainer {
 	}
 
 	// some [x,y] coordinates of graphical elements
-	final int COOK_BAR_XPOS = 49;
-	final int COOK_BAR_YPOS = 60;
-	final int COOK_BAR_ICON_U = 0;   // texture position of white arrow icon
-	final int COOK_BAR_ICON_V = 207;
-	final int COOK_BAR_WIDTH = 80;
+	final int COOK_BAR_XPOS = 79;
+	final int COOK_BAR_YPOS = 35;
+	final int COOK_BAR_ICON_U = 176;   // texture position of white arrow icon
+	final int COOK_BAR_ICON_V = 14;
+	final int COOK_BAR_WIDTH = 24;
 	final int COOK_BAR_HEIGHT = 17;
 
-	final int FLAME_XPOS = 54;
-	final int FLAME_YPOS = 80;
+	final int FLAME_XPOS = 56;
+	final int FLAME_YPOS = 36;
 	final int FLAME_ICON_U = 176;   // texture position of flame icon
 	final int FLAME_ICON_V = 0;
 	final int FLAME_WIDTH = 14;
 	final int FLAME_HEIGHT = 14;
-	final int FLAME_X_SPACING = 18;
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int x, int y) {
@@ -58,16 +56,13 @@ public class GuiFramedFurnace extends GuiContainer {
 		// get cook progress as a double between 0 and 1
 		double cookProgress = tileEntity.fractionOfCookTimeComplete();
 		// draw the cook progress bar
-		drawTexturedModalRect(guiLeft + COOK_BAR_XPOS, guiTop + COOK_BAR_YPOS, COOK_BAR_ICON_U, COOK_BAR_ICON_V,
-						              (int)(cookProgress * COOK_BAR_WIDTH), COOK_BAR_HEIGHT);
+		drawTexturedModalRect(guiLeft + COOK_BAR_XPOS, guiTop + COOK_BAR_YPOS, COOK_BAR_ICON_U, COOK_BAR_ICON_V, (int)(cookProgress * COOK_BAR_WIDTH), COOK_BAR_HEIGHT);
 
-		// draw the fuel remaining bar for each fuel slot flame
-		for (int i = 0; i < tileEntity.FUEL_SLOTS_COUNT; ++i) {
-			double burnRemaining = tileEntity.fractionOfFuelRemaining(i);
-			int yOffset = (int)((1.0 - burnRemaining) * FLAME_HEIGHT);
-			drawTexturedModalRect(guiLeft + FLAME_XPOS + FLAME_X_SPACING * i, guiTop + FLAME_YPOS + yOffset,
-														FLAME_ICON_U, FLAME_ICON_V + yOffset, FLAME_WIDTH, FLAME_HEIGHT - yOffset);
-		}
+		double burnRemaining = tileEntity.fractionOfFuelRemaining();
+		int yOffset = (int)Math.ceil((1.0 - burnRemaining) * (FLAME_HEIGHT - 2));
+		if (burnRemaining == 0) yOffset = FLAME_HEIGHT;
+		else if (yOffset == FLAME_HEIGHT) yOffset -= 2;
+		drawTexturedModalRect(guiLeft + FLAME_XPOS, guiTop + FLAME_YPOS + yOffset, FLAME_ICON_U, FLAME_ICON_V + yOffset, FLAME_WIDTH, FLAME_HEIGHT - yOffset);
 	}
 
 	@Override
@@ -86,13 +81,10 @@ public class GuiFramedFurnace extends GuiContainer {
 			int cookPercentage =(int)(tileEntity.fractionOfCookTimeComplete() * 100);
 			hoveringText.add(cookPercentage + "%");
 		}
-
-		// If the mouse is over one of the burn time indicator add the burn time indicator hovering text
-		for (int i = 0; i < tileEntity.FUEL_SLOTS_COUNT; ++i) {
-			if (isInRect(guiLeft + FLAME_XPOS + FLAME_X_SPACING * i, guiTop + FLAME_YPOS, FLAME_WIDTH, FLAME_HEIGHT, mouseX, mouseY)) {
-				hoveringText.add("Fuel Time:");
-				hoveringText.add(tileEntity.secondsOfFuelRemaining(i) + "s");
-			}
+		
+		if (isInRect(guiLeft + FLAME_XPOS, guiTop + FLAME_YPOS, FLAME_WIDTH, FLAME_HEIGHT, mouseX, mouseY)) {
+			hoveringText.add("Fuel Time:");
+			hoveringText.add(tileEntity.secondsOfFuelRemaining() + "s");
 		}
 		// If hoveringText is not empty draw the hovering text
 		if (!hoveringText.isEmpty()){
