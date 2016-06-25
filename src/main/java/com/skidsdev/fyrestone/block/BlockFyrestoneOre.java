@@ -20,7 +20,7 @@ public class BlockFyrestoneOre extends BlockBase
 	@Override
 	public Item getItemDropped(IBlockState blockstate, Random random, int fortune)
 	{
-		return ItemRegister.itemFyrestoneChunk;
+		return ItemRegister.itemFyrestoneShard;
 	}
 	
 	@Override

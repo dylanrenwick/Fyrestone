@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public final class ItemRegister 
 {	
-	public static Item itemFyrestoneChunk;
+	public static Item itemFyrestoneShard;
 	public static Item itemFyrestoneIngot;
 	public static Item itemFyrestoneSword;
 	
@@ -15,7 +15,7 @@ public final class ItemRegister
 	
 	public static final void createItems()
 	{
-		GameRegistry.register(itemFyrestoneChunk = new BaseItem("itemFyrestoneChunk"));
+		GameRegistry.register(itemFyrestoneShard = new ItemFyrestoneShard());
 		GameRegistry.register(itemFyrestoneIngot = new BaseItem("itemFyrestoneIngot"));
 		GameRegistry.register(itemFyrestoneSword = new ItemFyrestoneSword("itemFyrestoneSword", FYRESTONE));
 	}

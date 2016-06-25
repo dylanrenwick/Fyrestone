@@ -13,10 +13,8 @@ public final class BlockRegister
 {
 	public static Block blockFyrestoneOre;
 	public static Block blockFyrestoneBlock;
-	public static Block blockFramedFurnace;
 	public static ItemBlock itemBlockFyrestoneOre;
 	public static ItemBlock itemBlockFyrestoneBlock;
-	public static ItemBlock itemBlockFramedFurnace;
 	
 	public static void createBlocks()
 	{
