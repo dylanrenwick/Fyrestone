@@ -2,8 +2,6 @@ package com.skidsdev.fyrestone.block;
 
 import com.skidsdev.fyrestone.Fyrestone;
 import com.skidsdev.fyrestone.GuiHandlerRegistry;
-import com.skidsdev.fyrestone.gui.GuiHandlerFramedFurnace;
-import com.skidsdev.fyrestone.item.ItemBlockFramedFurnace;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -33,14 +31,5 @@ public final class BlockRegister
 		itemBlockFyrestoneBlock.setRegistryName("blockFyrestoneBlock");
 		GameRegistry.register(blockFyrestoneBlock);
 		GameRegistry.register(itemBlockFyrestoneBlock);
-		
-		blockFramedFurnace = new BlockFramedFurnace();
-		itemBlockFramedFurnace = new ItemBlockFramedFurnace(blockFramedFurnace);
-		itemBlockFramedFurnace.setRegistryName("blockFramedFurnace");
-		GameRegistry.register(blockFramedFurnace);
-		GameRegistry.register(itemBlockFramedFurnace);
-		
-		NetworkRegistry.INSTANCE.registerGuiHandler(Fyrestone.instance, GuiHandlerRegistry.getInstance());
-		GuiHandlerRegistry.getInstance().registerGuiHandler(new GuiHandlerFramedFurnace(), GuiHandlerFramedFurnace.getGuiID());
 	}
 }
