@@ -19,7 +19,7 @@ public class ItemRenderRegister
 		
 		for (EnumShardType type : EnumShardType.values())
 		{
-			String itemModelName = ItemRegister.itemShard.getRegistryName().toString() + type.getName();
+			String itemModelName = ItemRegister.itemShard.getRegistryName().toString() + "_" + type.getName();
 			reg(ItemRegister.itemShard, itemModelName, type.ordinal());
 		}
 	}
