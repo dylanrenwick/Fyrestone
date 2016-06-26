@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import com.skidsdev.fyrestone.block.BlockRitualCircle;
+
 import net.minecraft.item.ItemStack;
 import scala.actors.threadpool.Arrays;
 
@@ -16,11 +18,11 @@ public class RitualRecipeManager
 		if (!recipes.contains(recipe)) recipes.add(recipe);
 	}
 	
-	public static RitualRecipe GetRecipeFromInputs(ItemStack... inputs)
+	public static RitualRecipe GetRecipeFromInputs(BlockRitualCircle.EnumRitualType ritualType, ItemStack... inputs)
 	{		
 		for (RitualRecipe recipe : recipes)
 		{
-			if (compareInputSets(Arrays.asList(inputs), recipe.getInputs()))
+			if (recipe.getRitualType() == ritualType && compareInputSets(Arrays.asList(inputs), recipe.getInputs()))
 			{
 				return recipe;
 			}

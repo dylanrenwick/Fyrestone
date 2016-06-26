@@ -2,6 +2,8 @@ package com.skidsdev.fyrestone.tile;
 
 import java.util.List;
 
+import com.skidsdev.fyrestone.block.BlockRitualCircle;
+import com.skidsdev.fyrestone.block.BlockRitualCircle.EnumRitualType;
 import com.skidsdev.fyrestone.utils.Helper;
 import com.skidsdev.fyrestone.utils.RitualRecipe;
 import com.skidsdev.fyrestone.utils.RitualRecipeManager;
@@ -29,18 +31,40 @@ public class TileEntityRitualCircle extends TileEntity implements ITickable
 				stacks[i] = entities.get(i).getEntityItem();
 			}
 			
-			RitualRecipe recipe = RitualRecipeManager.GetRecipeFromInputs(stacks);
+			RitualRecipe recipe = RitualRecipeManager.GetRecipeFromInputs((EnumRitualType)this.getWorld().getBlockState(pos).getValue(BlockRitualCircle.RITUAL_TYPE), stacks);
 			
 			if (recipe != null)
 			{
 				for(EntityItem entity : entities) { entity.setDead(); }
 				EntityItem entityItem = new EntityItem(this.getWorld(), pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, recipe.getOutput());
 				this.getWorld().spawnEntityInWorld(entityItem);
-				
-				System.out.println("Recipe match!");
 			}
-			else System.out.println("No Recipe match");
+			else
+			{
+				if (stacks.length == 1)
+				{
+					if (stacks[0].getItem() == Items.DIAMOND 
+							&& (EnumRitualType)this.getWorld().getBlockState(pos).getValue(BlockRitualCircle.RITUAL_TYPE) == EnumRitualType.METALLURGY)
+					{
+						doMetallurgyMultiblock();
+					}
+					else if (stacks[0].getItem() == Items.EMERALD
+							&& (EnumRitualType)this.getWorld().getBlockState(pos).getValue(BlockRitualCircle.RITUAL_TYPE) == EnumRitualType.ALCHEMY)
+					{
+						doAlchemyMultiblock();
+					}
+				}
+			}
 		}
-		else System.out.println("No entities found");
+	}
+	
+	private void doMetallurgyMultiblock()
+	{
+		
+	}
+	
+	private void doAlchemyMultiblock()
+	{
+		
 	}
 }

@@ -55,6 +55,7 @@ public class Config
 		
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemFyrestoneIngot), 0, new ItemStack(ItemRegister.itemFyrestoneShard), new ItemStack(Items.IRON_INGOT)));
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemFyrestoneSword), 0, new ItemStack(ItemRegister.itemFyrestoneIngot, 2), new ItemStack(Items.IRON_SWORD)));
+		
 	}
 	
 	private void processConfigFile()
