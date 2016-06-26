@@ -52,6 +52,15 @@ public class TileEntityRitualCircle extends TileEntity implements ITickable
 						if (doMetallurgyMultiblock())
 						{
 							for(EntityItem entity : entities) { entity.setDead(); }
+							
+							for(int z = -2; z < 3; z+=4)
+							{
+								for(int x = -2; x < 3; x+=4)
+								{
+									this.getWorld().setBlockState(pos.add(x, 1, z), Blocks.AIR.getDefaultState());
+								}
+							}
+							
 							EntityItem entityItem = new EntityItem(this.getWorld(), pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, new ItemStack(ItemRegister.itemFyrestoneCatalyst, 1));
 							this.getWorld().spawnEntityInWorld(entityItem);
 						}
@@ -71,9 +80,9 @@ public class TileEntityRitualCircle extends TileEntity implements ITickable
 	
 	private boolean doMetallurgyMultiblock()
 	{
-		for(int x = -2; x < 3; x+=5)
+		for(int x = -2; x < 3; x+=4)
 		{
-			for(int z = -2; z < 3; z+=5)
+			for(int z = -2; z < 3; z+=4)
 			{
 				for(int y = -1; y < 1; y++)
 				{
