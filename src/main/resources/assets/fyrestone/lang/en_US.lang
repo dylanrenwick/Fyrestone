@@ -1,15 +1,8 @@
 < en_US.lang - English localization file for the mod Fyrestone >
-item.fyrestone:itemFyrestoneChunk.name=Fyrestone Chunk
+item.fyrestone:itemFyrestoneShard.name=Fyrestone Shard
 item.fyrestone:itemFyrestoneIngot.name=Fyrestone Ingot
 item.fyrestone:itemFyrestoneSword.name=Fyrestone Sword
+item.fyrestone:itemFyrestoneCatalyst.name=Fyrestone Catalyst
 tile.fyrestone:blockFyrestoneOre.name=Fyrestone Ore
 tile.fyrestone:blockFyrestoneBlock.name=Fyrestone Block
-tile.fyrestone:blockFramedFurnace.name=Framed Furnace
-tile.fyrestone:blockFramedFurnace.wood.name=Framed Furnace (Wood)
-tile.fyrestone:blockFramedFurnace.stone.name=Framed Furnace (Stone)
-tile.fyrestone:blockFramedFurnace.iron.name=Framed Furnace (Iron)
-tile.fyrestone:blockFramedFurnace.netherrack.name=Framed Furnace (Netherrack)
-tile.fyrestone:blockFramedFurnace.quartz.name=Framed Furnace (Quartz)
-tile.fyrestone:blockFramedFurnace.gold.name=Framed Furnace (Gold)
-tile.fyrestone:blockFramedFurnace.diamond.name=Framed Furnace (Diamond)
-tile.fyrestone:blockFramedFurnace.emerald.name=Framed Furnace (Emerald)
+tile.fyrestone:blockRitualCircle.name=Ritual Circle
