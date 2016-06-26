@@ -20,12 +20,12 @@ public class BlockFyrestoneOre extends BlockBase
 	@Override
 	public Item getItemDropped(IBlockState blockstate, Random random, int fortune)
 	{
-		return ItemRegister.itemFyrestoneShard;
+		return ItemRegister.itemShard;
 	}
 	
 	@Override
 	public int quantityDropped(IBlockState blockstate, int fortune, Random random)
 	{
-		return 1 + random.nextInt(3 - 1 + fortune + 1);
+		return 1 + fortune;
 	}
 }
