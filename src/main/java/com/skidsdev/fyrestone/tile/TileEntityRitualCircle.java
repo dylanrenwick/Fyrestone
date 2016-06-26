@@ -7,6 +7,7 @@ import com.skidsdev.fyrestone.utils.RitualRecipe;
 import com.skidsdev.fyrestone.utils.RitualRecipeManager;
 
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
@@ -33,7 +34,9 @@ public class TileEntityRitualCircle extends TileEntity implements ITickable
 			if (recipe != null)
 			{
 				for(EntityItem entity : entities) { entity.setDead(); }
-				Helper.spawnEntityItem(this.getWorld(), recipe.getOutput(), pos.getX(), pos.getY(), pos.getZ());
+				EntityItem entityItem = new EntityItem(this.getWorld(), pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, recipe.getOutput());
+				this.getWorld().spawnEntityInWorld(entityItem);
+				
 				System.out.println("Recipe match!");
 			}
 			else System.out.println("No Recipe match");

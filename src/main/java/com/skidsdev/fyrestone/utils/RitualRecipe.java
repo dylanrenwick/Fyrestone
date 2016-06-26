@@ -27,7 +27,7 @@ public class RitualRecipe
 	
 	public ItemStack getOutput()
 	{
-		return output;
+		return output.copy();
 	}
 	
 	public BlockRitualCircle.EnumRitualType getRitualType()
