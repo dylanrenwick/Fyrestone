@@ -71,20 +71,19 @@ public class TileEntityRitualCircle extends TileEntity implements ITickable
 	
 	private boolean doMetallurgyMultiblock()
 	{
-		for(int y = 0; y < 2; y++)
+		for(int x = -2; x < 3; x+=5)
 		{
-			for(int x = -1; x < 2; x+=2)
+			for(int z = -2; z < 3; z+=5)
 			{
-				for(int z = -1; z < 2; z+=2)
+				for(int y = -1; y < 1; y++)
 				{
 					Block block = this.getWorld().getBlockState(pos.add(x, y, z)).getBlock();
 					if (block != Blocks.IRON_BLOCK) return false;
 				}
+				Block block = this.getWorld().getBlockState(pos.add(x, 1, z)).getBlock();
+				if (block != BlockRegister.blockFyrestoneBlock) return false;
 			}
 		}
-		
-		Block block = this.getWorld().getBlockState(pos.add(0, 2, 0)).getBlock();
-		if (block != BlockRegister.blockFyrestoneBlock) return false;
 		
 		return true;
 	}
