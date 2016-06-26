@@ -2,13 +2,15 @@ package com.skidsdev.fyrestone.tile;
 
 import java.util.List;
 
+import com.skidsdev.fyrestone.block.BlockRegister;
 import com.skidsdev.fyrestone.block.BlockRitualCircle;
 import com.skidsdev.fyrestone.block.BlockRitualCircle.EnumRitualType;
-import com.skidsdev.fyrestone.utils.Helper;
 import com.skidsdev.fyrestone.utils.RitualRecipe;
 import com.skidsdev.fyrestone.utils.RitualRecipeManager;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -46,25 +48,46 @@ public class TileEntityRitualCircle extends TileEntity implements ITickable
 					if (stacks[0].getItem() == Items.DIAMOND 
 							&& (EnumRitualType)this.getWorld().getBlockState(pos).getValue(BlockRitualCircle.RITUAL_TYPE) == EnumRitualType.METALLURGY)
 					{
-						doMetallurgyMultiblock();
+						if (doMetallurgyMultiblock())
+						{
+							
+						}
 					}
 					else if (stacks[0].getItem() == Items.EMERALD
 							&& (EnumRitualType)this.getWorld().getBlockState(pos).getValue(BlockRitualCircle.RITUAL_TYPE) == EnumRitualType.ALCHEMY)
 					{
-						doAlchemyMultiblock();
+						if (doAlchemyMultiblock())
+						{
+							
+						}
 					}
 				}
 			}
 		}
 	}
 	
-	private void doMetallurgyMultiblock()
+	private boolean doMetallurgyMultiblock()
 	{
+		for(int y = 0; y < 2; y++)
+		{
+			for(int x = -1; x < 2; x+=2)
+			{
+				for(int z = -1; z < 2; z+=2)
+				{
+					Block block = this.getWorld().getBlockState(pos.add(x, y, z)).getBlock();
+					if (block != Blocks.IRON_BLOCK) return false;
+				}
+			}
+		}
 		
+		Block block = this.getWorld().getBlockState(pos.add(0, 2, 0)).getBlock();
+		if (block != BlockRegister.blockFyrestoneBlock) return false;
+		
+		return true;
 	}
 	
-	private void doAlchemyMultiblock()
+	private boolean doAlchemyMultiblock()
 	{
-		
+		return false;
 	}
 }
