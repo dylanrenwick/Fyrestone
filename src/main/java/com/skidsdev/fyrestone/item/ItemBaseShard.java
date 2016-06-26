@@ -1,5 +1,6 @@
 package com.skidsdev.fyrestone.item;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.skidsdev.fyrestone.block.BlockRegister;
@@ -7,6 +8,7 @@ import com.skidsdev.fyrestone.block.BlockRitualCircle;
 import com.skidsdev.fyrestone.block.BlockRitualCircle.EnumRitualType;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,6 +46,11 @@ public class ItemBaseShard extends BaseItem
 				BlockRegister.blockRitualCircle.onBlockPlacedBy(worldIn, pos.add(0, 1, 0), ritualCircle, player, stack);
 				stack.stackSize -= 1;
 			}
+		}
+		
+		if (EnumShardType.values()[stack.getMetadata()] == EnumShardType.WATERSTONE)
+		{
+			debug(worldIn.getBlockState(pos).getActualState(worldIn, pos));
 		}
 		
 		return EnumActionResult.SUCCESS;
@@ -94,6 +101,18 @@ public class ItemBaseShard extends BaseItem
 		}
 		
 		return true;
+	}
+	
+	private void debug(IBlockState state)
+	{
+		String msg = state.getBlock().getUnlocalizedName() + " - Properties [ ";
+		for (IProperty prop : state.getPropertyNames())
+		{
+			msg += prop.getName() + ": " + state.getValue(prop).toString() + ", ";
+		}
+		msg = msg.substring(0, msg.length() - 2);
+		msg += " ]";
+		System.out.println(msg);
 	}
 	
 	private IBlockState getRitualCircleBlock(ItemStack stack)

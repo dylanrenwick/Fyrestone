@@ -1,7 +1,31 @@
 {
     "variants": {
-        "ritual_type=metallurgy": { "model": "fyrestone:blockRitualCircle_Metallurgy" },
-        "ritual_type=alchemy": { "model": "fyrestone:blockRitualCircle_Alchemy" },
-        "ritual_type=imbuing": { "model": "fyrestone:blockRitualCircle_Imbuing" }
+        "circle_part=center,master_block=true,ritual_type=metallurgy": { "model": "fyrestone:blockRitualCircle_Metallurgy_Center" },
+        "circle_part=center,master_block=true,ritual_type=alchemy": { "model": "fyrestone:blockRitualCircle_Alchemy_Center" },
+        "circle_part=center,master_block=true,ritual_type=imbuing": { "model": "fyrestone:blockRitualCircle_Imbuing_Center" },
+        "circle_part=north,master_block=false,ritual_type=metallurgy": { "model": "fyrestone:blockRitualCircle_Metallurgy_Side" },
+        "circle_part=north,master_block=false,ritual_type=alchemy": { "model": "fyrestone:blockRitualCircle_Alchemy_Side" },
+        "circle_part=north,master_block=false,ritual_type=imbuing": { "model": "fyrestone:blockRitualCircle_Imbuing_Side" },
+        "circle_part=west,master_block=false,ritual_type=metallurgy": { "model": "fyrestone:blockRitualCircle_Metallurgy_Side", "y": 270 },
+        "circle_part=west,master_block=false,ritual_type=alchemy": { "model": "fyrestone:blockRitualCircle_Alchemy_Side", "y": 270 },
+        "circle_part=west,master_block=false,ritual_type=imbuing": { "model": "fyrestone:blockRitualCircle_Imbuing_Side", "y": 270 },
+        "circle_part=south,master_block=false,ritual_type=metallurgy": { "model": "fyrestone:blockRitualCircle_Metallurgy_Side", "y": 180 },
+        "circle_part=south,master_block=false,ritual_type=alchemy": { "model": "fyrestone:blockRitualCircle_Alchemy_Side", "y": 180 },
+        "circle_part=south,master_block=false,ritual_type=imbuing": { "model": "fyrestone:blockRitualCircle_Imbuing_Side", "y": 180 },
+        "circle_part=east,master_block=false,ritual_type=metallurgy": { "model": "fyrestone:blockRitualCircle_Metallurgy_Side", "y": 90 },
+        "circle_part=east,master_block=false,ritual_type=alchemy": { "model": "fyrestone:blockRitualCircle_Alchemy_Side", "y": 90 },
+        "circle_part=east,master_block=false,ritual_type=imbuing": { "model": "fyrestone:blockRitualCircle_Imbuing_Side", "y": 90 },
+        "circle_part=north_west,master_block=false,ritual_type=metallurgy": { "model": "fyrestone:blockRitualCircle_Metallurgy_Corner" },
+        "circle_part=north_west,master_block=false,ritual_type=alchemy": { "model": "fyrestone:blockRitualCircle_Alchemy_Corner" },
+        "circle_part=north_west,master_block=false,ritual_type=imbuing": { "model": "fyrestone:blockRitualCircle_Imbuing_Corner" },
+        "circle_part=north_east,master_block=false,ritual_type=metallurgy": { "model": "fyrestone:blockRitualCircle_Metallurgy_Corner", "y": 90 },
+        "circle_part=north_east,master_block=false,ritual_type=alchemy": { "model": "fyrestone:blockRitualCircle_Alchemy_Corner", "y": 90 },
+        "circle_part=north_east,master_block=false,ritual_type=imbuing": { "model": "fyrestone:blockRitualCircle_Imbuing_Corner", "y": 90 },
+        "circle_part=south_east,master_block=false,ritual_type=metallurgy": { "model": "fyrestone:blockRitualCircle_Metallurgy_Corner", "y": 180 },
+        "circle_part=south_east,master_block=false,ritual_type=alchemy": { "model": "fyrestone:blockRitualCircle_Alchemy_Corner", "y": 180 },
+        "circle_part=south_east,master_block=false,ritual_type=imbuing": { "model": "fyrestone:blockRitualCircle_Imbuing_Corner", "y": 180 },
+        "circle_part=south_west,master_block=false,ritual_type=metallurgy": { "model": "fyrestone:blockRitualCircle_Metallurgy_Corner", "y": 270 },
+        "circle_part=south_west,master_block=false,ritual_type=alchemy": { "model": "fyrestone:blockRitualCircle_Alchemy_Corner", "y": 270 },
+        "circle_part=south_west,master_block=false,ritual_type=imbuing": { "model": "fyrestone:blockRitualCircle_Imbuing_Corner", "y": 270 }
     }
 }

@@ -1,6 +1,6 @@
 {
     "parent": "fyrestone:block/blockRitualCircle",
     "textures": {
-        "circle": "fyrestone:blocks/blockRitualCircle_Metallurgy"
+        "circle": "fyrestone:blocks/blockRitualCircle_Metallurgy_Corner"
     }
 }

@@ -29,7 +29,7 @@ public class TileEntityRitualCircle extends TileEntity implements ITickable
 	public void update() {
 		if (this.getWorld().getWorldTime() % 20 != 0 || this.getWorld().isRemote) return;
 		
-		List<EntityItem> entities = this.getWorld().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1));
+		List<EntityItem> entities = this.getWorld().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.getX() - 1, pos.getY(), pos.getZ() - 1, pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1));
 		if (entities.size() > 0)
 		{
 			ItemStack[] stacks = new ItemStack[entities.size()];
@@ -43,7 +43,10 @@ public class TileEntityRitualCircle extends TileEntity implements ITickable
 			if (recipe != null)
 			{
 				for(EntityItem entity : entities) { entity.setDead(); }
-				EntityItem entityItem = new EntityItem(this.getWorld(), pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, recipe.getOutput());
+				EntityItem entityItem = new EntityItem(this.getWorld(), pos.getX() + 0.5f, pos.getY(), pos.getZ() + 0.5f, recipe.getOutput());
+				entityItem.motionX = 0;
+				entityItem.motionY = 0;
+				entityItem.motionZ = 0;
 				this.getWorld().spawnEntityInWorld(entityItem);
 			}
 			else

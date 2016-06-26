@@ -23,6 +23,7 @@ public class BlockRitualCircle extends BlockBase
 {
 	public static final PropertyEnum RITUAL_TYPE = PropertyEnum.create("ritual_type", EnumRitualType.class);
 	public static final PropertyBool MASTER_BLOCK = PropertyBool.create("master_block");
+	public static final PropertyEnum CIRCLE_PART = PropertyEnum.create("circle_part", EnumCirclePart.class);
 	
 	public BlockRitualCircle(String regName) {
 		super(regName, Material.ROCK, 0.0f, 0.0f);
@@ -46,17 +47,35 @@ public class BlockRitualCircle extends BlockBase
 	}
 	
 	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
+	{
+		if (state.getValue(MASTER_BLOCK)) return state.withProperty(CIRCLE_PART, EnumCirclePart.CENTER);
+		
+		//Pos X = East, Pos Z = South
+		BlockPos masterPos = getMasterBlock(worldIn, pos);
+		if (masterPos == null) return state;
+		
+		int xdif = 0;
+		int zdif = 0;
+		
+		if (masterPos.getX() < pos.getX()) xdif = 1;
+		else if (masterPos.getX() > pos.getX()) xdif = -1;
+		if (masterPos.getZ() < pos.getZ()) zdif = 1;
+		else if (masterPos.getZ() > pos.getZ()) zdif = -1;
+		
+		return state.withProperty(CIRCLE_PART, EnumCirclePart.getCirclePartFromDir(xdif, zdif));
+	}
+	
+	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state)
 	{
 		if (state.getValue(MASTER_BLOCK))
 		{
-			System.out.println("Master block destroyed");
 			for (int x = -1; x < 2; x++)
 			{
 				for (int z = -1; z < 2; z++)
 				{
 					worldIn.setBlockState(pos.add(x, 0, z), Blocks.AIR.getDefaultState());
-					System.out.println("Master block destroyed non-master");
 				}
 			}
 		}
@@ -65,7 +84,6 @@ public class BlockRitualCircle extends BlockBase
 			BlockPos masterPos = getMasterBlock(worldIn, pos);
 			IBlockState masterState = worldIn.getBlockState(masterPos);
 			if (masterState != null) masterState.getBlock().onBlockDestroyedByPlayer(worldIn, masterPos, masterState);
-			System.out.println("non-master block destroyed");
 		}
 	}
 	
@@ -75,7 +93,7 @@ public class BlockRitualCircle extends BlockBase
 	@Override
 	protected BlockStateContainer createBlockState()
 	{
-		return new BlockStateContainer(this, RITUAL_TYPE, MASTER_BLOCK);
+		return new BlockStateContainer(this, RITUAL_TYPE, MASTER_BLOCK, CIRCLE_PART);
 	}
 	
 	@Override
@@ -120,6 +138,22 @@ public class BlockRitualCircle extends BlockBase
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World worldIn, BlockPos pos) { return null; }
 	
 	private BlockPos getMasterBlock(World worldIn, BlockPos pos)
+	{
+		for (int x = -1; x < 2; x++)
+		{
+			for (int z = -1; z < 2; z++)
+			{
+				if (x == 0 && z == 0) continue;
+				if(worldIn.getBlockState(pos.add(x, 0, z)).getBlock() == this && worldIn.getBlockState(pos.add(x, 0, z)).getValue(MASTER_BLOCK))
+				{
+					return pos.add(x, 0, z);
+				}
+			}
+		}
+		
+		return null;
+	}
+	private BlockPos getMasterBlock(IBlockAccess worldIn, BlockPos pos)
 	{
 		for (int x = -1; x < 2; x++)
 		{
@@ -180,6 +214,80 @@ public class BlockRitualCircle extends BlockBase
 			if (meta < 0 || meta >= values().length)	{ meta = 0;	}
 			
 			return values()[meta];
+		}
+	}
+	
+	public enum EnumCirclePart implements IStringSerializable
+	{
+		NORTH("north"),
+		NORTHWEST("north_west"),
+		WEST("west"),
+		SOUTHWEST("south_west"),
+		SOUTH("south"),
+		SOUTHEAST("south_east"),
+		EAST("east"),
+		NORTHEAST("north_east"),
+		CENTER("center");
+		
+		private String name;
+		
+		private EnumCirclePart(String i_name)
+		{
+			name = i_name;
+		}
+		
+		public String getName() { return name; }
+		
+		@Override
+		public String toString() { return this.name; }
+		
+		public static EnumCirclePart getCirclePartFromDir(int xdif, int zdif)
+		{
+			if (xdif > 0)
+			{
+				if (zdif > 0)
+				{
+					return SOUTHEAST;
+				}
+				else if (zdif < 0)
+				{
+					return NORTHEAST;
+				}
+				else
+				{
+					return EAST;
+				}
+			}
+			else if (xdif < 0)
+			{
+				if (zdif > 0)
+				{
+					return SOUTHWEST;
+				}
+				else if (zdif < 0)
+				{
+					return NORTHWEST;
+				}
+				else
+				{
+					return WEST;
+				}
+			}
+			else
+			{
+				if (zdif > 0)
+				{
+					return SOUTH;
+				}
+				else if (zdif < 0)
+				{
+					return NORTH;
+				}
+				else
+				{
+					return CENTER;
+				}
+			}
 		}
 	}
 }
