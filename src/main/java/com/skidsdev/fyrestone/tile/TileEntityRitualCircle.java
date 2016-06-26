@@ -5,6 +5,7 @@ import java.util.List;
 import com.skidsdev.fyrestone.block.BlockRegister;
 import com.skidsdev.fyrestone.block.BlockRitualCircle;
 import com.skidsdev.fyrestone.block.BlockRitualCircle.EnumRitualType;
+import com.skidsdev.fyrestone.item.ItemRegister;
 import com.skidsdev.fyrestone.utils.RitualRecipe;
 import com.skidsdev.fyrestone.utils.RitualRecipeManager;
 
@@ -50,7 +51,9 @@ public class TileEntityRitualCircle extends TileEntity implements ITickable
 					{
 						if (doMetallurgyMultiblock())
 						{
-							
+							for(EntityItem entity : entities) { entity.setDead(); }
+							EntityItem entityItem = new EntityItem(this.getWorld(), pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, new ItemStack(ItemRegister.itemFyrestoneCatalyst, 1));
+							this.getWorld().spawnEntityInWorld(entityItem);
 						}
 					}
 					else if (stacks[0].getItem() == Items.EMERALD
