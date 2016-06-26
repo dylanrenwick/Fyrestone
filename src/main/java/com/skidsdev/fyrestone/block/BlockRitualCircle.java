@@ -1,15 +1,15 @@
 package com.skidsdev.fyrestone.block;
 
-import java.util.List;
-
+import com.skidsdev.fyrestone.block.BlockRitualCircle.EnumRitualType;
 import com.skidsdev.fyrestone.tile.TileEntityRitualCircle;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -18,12 +18,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockRitualCircle extends BlockBase
 {
 	public static final PropertyEnum RITUAL_TYPE = PropertyEnum.create("ritual_type", EnumRitualType.class);
+	public static final PropertyBool MASTER_BLOCK = PropertyBool.create("master_block");
 	
 	public BlockRitualCircle(String regName) {
 		super(regName, Material.ROCK, 0.0f, 0.0f);
@@ -33,7 +32,41 @@ public class BlockRitualCircle extends BlockBase
 	@Override
 	public TileEntity createTileEntity(World worldIn, IBlockState state)
 	{
-		return new TileEntityRitualCircle();
+		if (state.getValue(MASTER_BLOCK)) return new TileEntityRitualCircle();
+		return null;
+	}
+	
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack)
+	{
+		if (state.getValue(MASTER_BLOCK))
+		{
+			createRitualCircle(worldIn, pos, state);
+		}
+	}
+	
+	@Override
+	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state)
+	{
+		if (state.getValue(MASTER_BLOCK))
+		{
+			System.out.println("Master block destroyed");
+			for (int x = -1; x < 2; x++)
+			{
+				for (int z = -1; z < 2; z++)
+				{
+					worldIn.setBlockState(pos.add(x, 0, z), Blocks.AIR.getDefaultState());
+					System.out.println("Master block destroyed non-master");
+				}
+			}
+		}
+		else
+		{
+			BlockPos masterPos = getMasterBlock(worldIn, pos);
+			IBlockState masterState = worldIn.getBlockState(masterPos);
+			if (masterState != null) masterState.getBlock().onBlockDestroyedByPlayer(worldIn, masterPos, masterState);
+			System.out.println("non-master block destroyed");
+		}
 	}
 	
 	@Override
@@ -42,7 +75,7 @@ public class BlockRitualCircle extends BlockBase
 	@Override
 	protected BlockStateContainer createBlockState()
 	{
-		return new BlockStateContainer(this, RITUAL_TYPE);
+		return new BlockStateContainer(this, RITUAL_TYPE, MASTER_BLOCK);
 	}
 	
 	@Override
@@ -59,23 +92,22 @@ public class BlockRitualCircle extends BlockBase
 	{
 		EnumRitualType ritualType = (EnumRitualType)state.getValue(RITUAL_TYPE);
 		
-		return ritualType.ordinal();
+		int meta = ritualType.ordinal();
+		if (state.getValue(MASTER_BLOCK)) meta *= 2;
+		
+		return meta;
 	}
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta)
 	{
-		return this.getDefaultState().withProperty(RITUAL_TYPE, EnumRitualType.fromMetadata(meta));
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
-	{
-		for (EnumRitualType ritualType : EnumRitualType.values())
+		boolean masterBlock = false;
+		if (meta > EnumRitualType.values().length - 1)
 		{
-			list.add(new ItemStack(itemIn, 1, ritualType.ordinal()));
+			meta /= 2;
+			masterBlock = true;
 		}
+		return this.getDefaultState().withProperty(RITUAL_TYPE, EnumRitualType.fromMetadata(meta)).withProperty(MASTER_BLOCK, masterBlock);
 	}
 	
 	@Override
@@ -86,6 +118,38 @@ public class BlockRitualCircle extends BlockBase
 	
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World worldIn, BlockPos pos) { return null; }
+	
+	private BlockPos getMasterBlock(World worldIn, BlockPos pos)
+	{
+		for (int x = -1; x < 2; x++)
+		{
+			for (int z = -1; z < 2; z++)
+			{
+				if (x == 0 && z == 0) continue;
+				if(worldIn.getBlockState(pos.add(x, 0, z)).getBlock() == this && worldIn.getBlockState(pos.add(x, 0, z)).getValue(MASTER_BLOCK))
+				{
+					return pos.add(x, 0, z);
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	private void createRitualCircle(World worldIn, BlockPos pos, IBlockState state)
+	{
+		for (int x = -1; x < 2; x++)
+		{
+			for (int z = -1; z < 2; z++)
+			{
+				if (x == 0 && z == 0) continue;
+				worldIn.setBlockState(pos.add(x, 0, z), 
+						this.getDefaultState()
+						.withProperty(BlockRitualCircle.RITUAL_TYPE, (EnumRitualType)state.getValue(BlockRitualCircle.RITUAL_TYPE))
+						.withProperty(BlockRitualCircle.MASTER_BLOCK, false));
+			}
+		}
+	}
 	
 	public enum EnumRitualType implements IStringSerializable
 	{

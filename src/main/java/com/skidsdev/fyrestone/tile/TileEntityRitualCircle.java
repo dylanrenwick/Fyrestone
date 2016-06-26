@@ -20,6 +20,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 
 public class TileEntityRitualCircle extends TileEntity implements ITickable
 {
+	public TileEntityRitualCircle()
+	{
+		super();
+	}
 
 	@Override
 	public void update() {

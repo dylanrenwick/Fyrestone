@@ -41,6 +41,7 @@ public class ItemBaseShard extends BaseItem
 			if (ritualCircle != null)
 			{
 				worldIn.setBlockState(new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ()), ritualCircle, 3);
+				BlockRegister.blockRitualCircle.onBlockPlacedBy(worldIn, pos.add(0, 1, 0), ritualCircle, player, stack);
 				stack.stackSize -= 1;
 			}
 		}
