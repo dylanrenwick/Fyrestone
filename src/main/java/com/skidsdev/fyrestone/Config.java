@@ -4,10 +4,11 @@ import java.io.File;
 
 import com.skidsdev.fyrestone.block.BlockFyrestoneOre;
 import com.skidsdev.fyrestone.block.BlockRegister;
+import com.skidsdev.fyrestone.block.BlockRitualCircle;
 import com.skidsdev.fyrestone.item.ItemRegister;
-import com.skidsdev.fyrestone.utils.ItemNBTHelper;
+import com.skidsdev.fyrestone.utils.RitualRecipe;
+import com.skidsdev.fyrestone.utils.RitualRecipeManager;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -52,9 +53,8 @@ public class Config
 		GameRegistry.addRecipe(new ItemStack(BlockRegister.blockFyrestoneBlock), new Object[] {"###", "###", "###", '#', ItemRegister.itemFyrestoneIngot});
 		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegister.itemFyrestoneIngot, 9), BlockRegister.blockFyrestoneBlock);
 		
-		GameRegistry.addRecipe(new ItemStack(ItemRegister.itemFyrestoneSword), new Object[] {"#", "#", "=", '#', ItemRegister.itemFyrestoneIngot, '=', Items.STICK});
-		
-		GameRegistry.addSmelting(ItemRegister.itemFyrestoneShard, new ItemStack(ItemRegister.itemFyrestoneIngot), 0.7F);
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemFyrestoneIngot), 0, new ItemStack(ItemRegister.itemFyrestoneShard), new ItemStack(Items.IRON_INGOT)));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemFyrestoneSword), 0, new ItemStack(ItemRegister.itemFyrestoneIngot, 2), new ItemStack(Items.IRON_SWORD)));
 	}
 	
 	private void processConfigFile()

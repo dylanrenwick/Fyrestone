@@ -13,8 +13,10 @@ public final class BlockRegister
 {
 	public static Block blockFyrestoneOre;
 	public static Block blockFyrestoneBlock;
+	public static Block blockRitualCircle;
 	public static ItemBlock itemBlockFyrestoneOre;
 	public static ItemBlock itemBlockFyrestoneBlock;
+	public static ItemBlock itemBlockRitualCircle;
 	
 	public static void createBlocks()
 	{
@@ -29,5 +31,11 @@ public final class BlockRegister
 		itemBlockFyrestoneBlock.setRegistryName("blockFyrestoneBlock");
 		GameRegistry.register(blockFyrestoneBlock);
 		GameRegistry.register(itemBlockFyrestoneBlock);
+		
+		blockRitualCircle = new BlockRitualCircle("blockRitualCircle");
+		itemBlockRitualCircle = new ItemBlock(blockRitualCircle);
+		itemBlockRitualCircle.setRegistryName("blockRitualCircle");
+		GameRegistry.register(blockRitualCircle);
+		GameRegistry.register(itemBlockRitualCircle);
 	}
 }

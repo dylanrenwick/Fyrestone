@@ -14,6 +14,7 @@ public final class BlockRenderRegister
 	{
 		reg(BlockRegister.blockFyrestoneOre);
 		reg(BlockRegister.blockFyrestoneBlock);
+		reg(BlockRegister.blockRitualCircle);
 	}
 	
 	public static void reg(Block block)

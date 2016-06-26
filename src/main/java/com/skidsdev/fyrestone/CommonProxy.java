@@ -1,5 +1,6 @@
 package com.skidsdev.fyrestone;
 
+import com.skidsdev.fyrestone.tile.TileEntityRitualCircle;
 import com.skidsdev.fyrestone.world.FyrestoneWorldGenerator;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -18,6 +19,8 @@ public class CommonProxy
 		this.modConfig.setupItems();
 		this.modConfig.setupBlocks();
 		this.modConfig.setupCrafting();
+		
+		GameRegistry.registerTileEntity(TileEntityRitualCircle.class, "ritualcircle");
 	}
 	
 	public void init(FMLInitializationEvent e)
