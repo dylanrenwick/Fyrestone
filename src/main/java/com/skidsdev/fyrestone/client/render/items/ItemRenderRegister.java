@@ -14,6 +14,8 @@ public class ItemRenderRegister
 	public static void registerItemRenderer()
 	{
 		reg(ItemRegister.itemFyrestoneIngot);
+		reg(ItemRegister.itemEarthstoneIngot);
+		reg(ItemRegister.itemMysticalOrb);
 		reg(ItemRegister.itemFyrestoneSword);
 		reg(ItemRegister.itemFyrestoneCatalyst);
 		
