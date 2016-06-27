@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+import com.skidsdev.fyrestone.item.ItemRegister;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.storage.loot.LootContext;
@@ -36,7 +38,22 @@ public class LootHandler
 		
 		if (evt.getName() == LootTableList.CHESTS_SIMPLE_DUNGEON)
 		{
-			//lp.addItem(createLootEntry(null, 0, 1, 1, 0.25));
+			lp.addItem(createLootEntry(ItemRegister.itemMysticalOrb, 0, 1, 1, 0.25));
+		}
+		
+		if (evt.getName() == LootTableList.CHESTS_JUNGLE_TEMPLE)
+		{
+			lp.addItem(createLootEntry(ItemRegister.itemMysticalOrb, 0, 1, 1, 0.3));
+		}
+		
+		if (evt.getName() == LootTableList.CHESTS_VILLAGE_BLACKSMITH)
+		{
+			lp.addItem(createLootEntry(ItemRegister.itemMysticalOrb, 0, 1, 1, 0.25));
+		}
+		
+		if (evt.getName() == LootTableList.ENTITIES_ENDERMAN)
+		{
+			lp.addItem(createLootEntry(ItemRegister.itemMysticalOrb, 0, 1, 1, 0.1));
 		}
 	}
 	
