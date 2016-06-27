@@ -1,6 +1,7 @@
 package com.skidsdev.fyrestone.item;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -25,7 +26,11 @@ public class ItemFyrestoneSword extends ItemSword
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
 	{
-		entity.setFire(5);
+		if (entity instanceof EntityLivingBase)
+		{
+			EntityLivingBase livingEntity = (EntityLivingBase)entity;
+			livingEntity.setFire(5);
+		}
 		
 		return false;
 	}
