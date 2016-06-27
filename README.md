@@ -12,6 +12,6 @@ Fyrestone is currently incompatible with the following mods:
  * None! But I'm planning on adding Thaumcraft integration soon
 
 ## License
-Fyrestone is licensed under the GNU GPL license.
+Fyrestone is licensed under the MIT license.
 
-In short, you can do as you please with this mod, provided you distribute any modifications or redistributions under the same license.
+In short, do what you want.
