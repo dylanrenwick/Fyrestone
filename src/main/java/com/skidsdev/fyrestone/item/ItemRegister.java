@@ -4,6 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 public final class ItemRegister 
 {	
@@ -27,5 +28,10 @@ public final class ItemRegister
 		GameRegistry.register(itemFyrestoneCatalyst = new BaseItem("itemFyrestoneCatalyst"));
 		GameRegistry.register(itemFyrestoneSword = new ItemFyrestoneSword("itemFyrestoneSword", FYRESTONE));
 		GameRegistry.register(itemEarthstoneSword = new ItemEarthstoneSword("itemEarthstoneSword", EARTHSTONE));
+		
+		OreDictionary.registerOre("ingotFyrestone", itemFyrestoneIngot);
+		OreDictionary.registerOre("ingotEarthstone", itemEarthstoneIngot);
+		OreDictionary.registerOre("itemMysticalOrb", itemMysticalOrb);
+		OreDictionary.registerOre("itemFyrestoneCatalyst", itemFyrestoneCatalyst);
 	}
 }
