@@ -15,6 +15,7 @@ public final class ItemRegister
 	public static Item itemFyrestoneCatalyst;
 	
 	public static ToolMaterial FYRESTONE = EnumHelper.addToolMaterial("FYRESTONE", 2, 500, 10.0F, 2.0F, 18);
+	public static ToolMaterial EARTHSTONE = EnumHelper.addToolMaterial("EARTHSTONE", 3, 2500, 14.0F, 1.4F, 22);
 	
 	public static final void createItems()
 	{
