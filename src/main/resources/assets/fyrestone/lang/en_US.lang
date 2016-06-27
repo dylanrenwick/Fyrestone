@@ -1,5 +1,11 @@
 < en_US.lang - English localization file for the mod Fyrestone >
-item.fyrestone:itemFyrestoneShard.name=Fyrestone Shard
+item.fyrestone:itemShard_fyrestone.name=Fyrestone Shard
+item.fyrestone:itemShard_waterstone.name=Waterstone Shard
+item.fyrestone:itemShard_orderstone.name=Orderstone Shard
+item.fyrestone:itemShard_chaosstone.name=Chaosstone Shard
+item.fyrestone:itemShard_earthstone.name=Earthstone Shard
+item.fyrestone:itemShard_airstone.name=Airstone Shard
+item.fyrestone:itemShard_debug.name=Debug Shard (Patent Pending)
 item.fyrestone:itemFyrestoneIngot.name=Fyrestone Ingot
 item.fyrestone:itemFyrestoneSword.name=Fyrestone Sword
 item.fyrestone:itemFyrestoneCatalyst.name=Fyrestone Catalyst
