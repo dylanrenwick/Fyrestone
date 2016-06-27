@@ -5,13 +5,16 @@ import java.io.File;
 import com.skidsdev.fyrestone.block.BlockFyrestoneOre;
 import com.skidsdev.fyrestone.block.BlockRegister;
 import com.skidsdev.fyrestone.block.BlockRitualCircle;
+import com.skidsdev.fyrestone.item.ItemBaseShard;
 import com.skidsdev.fyrestone.item.ItemBaseShard.EnumShardType;
 import com.skidsdev.fyrestone.item.ItemRegister;
 import com.skidsdev.fyrestone.utils.RitualRecipe;
 import com.skidsdev.fyrestone.utils.RitualRecipeManager;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
@@ -55,11 +58,17 @@ public class Config
 		GameRegistry.addRecipe(new ItemStack(BlockRegister.blockFyrestoneBlock), new Object[] {"###", "###", "###", '#', ItemRegister.itemFyrestoneIngot});
 		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegister.itemFyrestoneIngot, 9), BlockRegister.blockFyrestoneBlock);
 		
-		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemFyrestoneIngot), 0, new ItemStack(ItemRegister.itemShard, 1, EnumShardType.FYRESTONE.ordinal()), new ItemStack(Items.IRON_INGOT)));
+		//Metallurgy Rituals
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemFyrestoneIngot), 0, ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), new ItemStack(Items.IRON_INGOT)));
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemFyrestoneSword), 0, new ItemStack(ItemRegister.itemFyrestoneIngot, 2), new ItemStack(Items.IRON_SWORD)));
-		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemShard, 1, EnumShardType.WATERSTONE.ordinal()), 0, new ItemStack(ItemRegister.itemFyrestoneCatalyst), new ItemStack(ItemRegister.itemShard, 1, EnumShardType.FYRESTONE.ordinal()), new ItemStack(Items.WATER_BUCKET), new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.WATERSTONE), 0, new ItemStack(ItemRegister.itemFyrestoneCatalyst), ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), new ItemStack(Items.WATER_BUCKET), new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())));
 		
-		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemShard, 1, EnumShardType.WATERSTONE.ordinal()), 1, new ItemStack(ItemRegister.itemShard, 1, EnumShardType.FYRESTONE.ordinal()), new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())));
+		//Alchemy Rituals
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.WATERSTONE), 1, ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.EARTHSTONE), 1, ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), new ItemStack(Blocks.DIRT), new ItemStack(ItemRegister.itemFyrestoneCatalyst)));
+		
+		//Imbuing Rituals
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.EARTHSTONE), 2, ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), new ItemStack(Blocks.DIRT)));
 	}
 	
 	private void processConfigFile()
