@@ -9,6 +9,7 @@ public final class ItemRegister
 {	
 	public static Item itemShard;
 	public static Item itemFyrestoneIngot;
+	public static Item itemEarthstoneIngot;
 	public static Item itemFyrestoneSword;
 	public static Item itemFyrestoneCatalyst;
 	
@@ -18,6 +19,7 @@ public final class ItemRegister
 	{
 		GameRegistry.register(itemShard = new ItemBaseShard());
 		GameRegistry.register(itemFyrestoneIngot = new BaseItem("itemFyrestoneIngot"));
+		GameRegistry.register(itemEarthstoneIngot = new BaseItem("itemEarthstoneIngot"));
 		GameRegistry.register(itemFyrestoneCatalyst = new BaseItem("itemFyrestoneCatalyst"));
 		GameRegistry.register(itemFyrestoneSword = new ItemFyrestoneSword("itemFyrestoneSword", FYRESTONE));
 	}
