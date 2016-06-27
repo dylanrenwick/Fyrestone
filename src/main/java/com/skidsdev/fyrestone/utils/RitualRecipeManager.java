@@ -1,13 +1,13 @@
 package com.skidsdev.fyrestone.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
 import com.skidsdev.fyrestone.block.BlockRitualCircle;
 
 import net.minecraft.item.ItemStack;
-import scala.actors.threadpool.Arrays;
 
 public class RitualRecipeManager
 {
