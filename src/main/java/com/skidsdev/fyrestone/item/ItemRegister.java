@@ -12,6 +12,7 @@ public final class ItemRegister
 	public static Item itemEarthstoneIngot;
 	public static Item itemMysticalOrb;
 	public static Item itemFyrestoneSword;
+	public static Item itemEarthstoneSword;
 	public static Item itemFyrestoneCatalyst;
 	
 	public static ToolMaterial FYRESTONE = EnumHelper.addToolMaterial("FYRESTONE", 2, 500, 10.0F, 2.0F, 18);
@@ -25,5 +26,6 @@ public final class ItemRegister
 		GameRegistry.register(itemMysticalOrb = new BaseItem("itemMysticalOrb"));
 		GameRegistry.register(itemFyrestoneCatalyst = new BaseItem("itemFyrestoneCatalyst"));
 		GameRegistry.register(itemFyrestoneSword = new ItemFyrestoneSword("itemFyrestoneSword", FYRESTONE));
+		GameRegistry.register(itemEarthstoneSword = new ItemEarthstoneSword("itemEarthstoneSword", EARTHSTONE));
 	}
 }
