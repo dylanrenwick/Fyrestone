@@ -1,6 +1,6 @@
 {
     "parent": "fyrestone:block/blockRitualCircle",
     "textures": {
-        "circle": "fyrestone:blocks/blockRitualCircle_Imbuing_Center"
+        "circle": "fyrestone:blocks/blockRitualCircle_Imbuing_Side"
     }
 }
