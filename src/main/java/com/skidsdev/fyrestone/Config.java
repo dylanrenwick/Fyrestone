@@ -57,9 +57,9 @@ public class Config
 		
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemFyrestoneIngot), 0, new ItemStack(ItemRegister.itemShard, 1, EnumShardType.FYRESTONE.ordinal()), new ItemStack(Items.IRON_INGOT)));
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemFyrestoneSword), 0, new ItemStack(ItemRegister.itemFyrestoneIngot, 2), new ItemStack(Items.IRON_SWORD)));
-		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemShard, 1, EnumShardType.WATERSTONE.ordinal()), 0, new ItemStack(ItemRegister.itemFyrestoneCatalyst), new ItemStack(ItemRegister.itemShard, 1, EnumShardType.FYRESTONE.ordinal()), new ItemStack(Items.WATER_BUCKET), new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getMetadata())));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemShard, 1, EnumShardType.WATERSTONE.ordinal()), 0, new ItemStack(ItemRegister.itemFyrestoneCatalyst), new ItemStack(ItemRegister.itemShard, 1, EnumShardType.FYRESTONE.ordinal()), new ItemStack(Items.WATER_BUCKET), new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())));
 		
-		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemShard, 1, EnumShardType.WATERSTONE.ordinal()), 1, new ItemStack(ItemRegister.itemShard, 1, EnumShardType.FYRESTONE.ordinal()), new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getMetadata())));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemShard, 1, EnumShardType.WATERSTONE.ordinal()), 1, new ItemStack(ItemRegister.itemShard, 1, EnumShardType.FYRESTONE.ordinal()), new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())));
 	}
 	
 	private void processConfigFile()

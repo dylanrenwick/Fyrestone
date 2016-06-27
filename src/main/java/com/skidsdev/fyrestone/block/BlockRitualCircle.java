@@ -81,6 +81,7 @@ public class BlockRitualCircle extends BlockBase
 		}
 		else
 		{
+			if (state.getValue(CIRCLE_PART) == EnumCirclePart.CENTER) return;
 			BlockPos masterPos = getMasterBlock(worldIn, pos);
 			IBlockState masterState = worldIn.getBlockState(masterPos);
 			if (masterState != null) masterState.getBlock().onBlockDestroyedByPlayer(worldIn, masterPos, masterState);
@@ -111,7 +112,7 @@ public class BlockRitualCircle extends BlockBase
 		EnumRitualType ritualType = (EnumRitualType)state.getValue(RITUAL_TYPE);
 		
 		int meta = ritualType.ordinal();
-		if (state.getValue(MASTER_BLOCK)) meta *= 2;
+		if (state.getValue(MASTER_BLOCK)) meta += 8;
 		
 		return meta;
 	}
@@ -122,7 +123,7 @@ public class BlockRitualCircle extends BlockBase
 		boolean masterBlock = false;
 		if (meta > EnumRitualType.values().length - 1)
 		{
-			meta /= 2;
+			meta -= 8;
 			masterBlock = true;
 		}
 		return this.getDefaultState().withProperty(RITUAL_TYPE, EnumRitualType.fromMetadata(meta)).withProperty(MASTER_BLOCK, masterBlock);

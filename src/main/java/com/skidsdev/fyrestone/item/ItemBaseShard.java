@@ -48,7 +48,7 @@ public class ItemBaseShard extends BaseItem
 			}
 		}
 		
-		if (EnumShardType.values()[stack.getMetadata()] == EnumShardType.WATERSTONE)
+		if (EnumShardType.values()[stack.getMetadata()] == EnumShardType.DEBUG)
 		{
 			debug(worldIn.getBlockState(pos).getActualState(worldIn, pos));
 		}
@@ -113,6 +113,9 @@ public class ItemBaseShard extends BaseItem
 		msg = msg.substring(0, msg.length() - 2);
 		msg += " ]";
 		System.out.println(msg);
+		
+		int meta = state.getBlock().getMetaFromState(state);
+		System.out.println("Meta: " + meta);
 	}
 	
 	private IBlockState getRitualCircleBlock(ItemStack stack)
@@ -140,7 +143,8 @@ public class ItemBaseShard extends BaseItem
 		ORDERSTONE("orderstone"),
 		CHAOSSTONE("chaosstone"),
 		EARTHSTONE("earthstone"),
-		AIRSTONE("airstone");
+		AIRSTONE("airstone"),
+		DEBUG("debug");
 		
 		private String name;
 		
