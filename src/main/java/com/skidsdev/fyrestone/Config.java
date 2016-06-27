@@ -4,7 +4,6 @@ import java.io.File;
 
 import com.skidsdev.fyrestone.block.BlockFyrestoneOre;
 import com.skidsdev.fyrestone.block.BlockRegister;
-import com.skidsdev.fyrestone.block.BlockRitualCircle;
 import com.skidsdev.fyrestone.item.ItemBaseShard;
 import com.skidsdev.fyrestone.item.ItemBaseShard.EnumShardType;
 import com.skidsdev.fyrestone.item.ItemRegister;
@@ -14,7 +13,6 @@ import com.skidsdev.fyrestone.utils.RitualRecipeManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
