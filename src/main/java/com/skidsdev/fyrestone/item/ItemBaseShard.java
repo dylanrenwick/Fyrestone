@@ -31,6 +31,68 @@ public class ItemBaseShard extends BaseItem
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 	}
+	
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+	{
+		EnumShardType type = EnumShardType.values()[stack.getMetadata()];
+		
+		switch(type)
+		{
+			case FYRESTONE:
+				tooltip.add("This shard is glowing softly with heat");
+				tooltip.add("");
+				tooltip.add("Fyrestone shards contain more magical");
+				tooltip.add("potential than other shards, and are");
+				tooltip.add("the only shards our world appears to be");
+				tooltip.add("able to create naturally.");
+				break;
+			case WATERSTONE:
+				tooltip.add("This shard is cool to the touch");
+				tooltip.add("");
+				tooltip.add("Waterstone is the polar opposite of");
+				tooltip.add("Fyrestone, and as such seems to suck");
+				tooltip.add("in all heat around it, creating a");
+				tooltip.add("pocket of cold air.");
+				break;
+			case ORDERSTONE:
+				tooltip.add("This shard is inert");
+				tooltip.add("");
+				tooltip.add("Orderstone is a perfect balance of");
+				tooltip.add("opposing forces. A material in pure");
+				tooltip.add("harmony. It's not very useful.");
+				break;
+			case CHAOSSTONE:
+				tooltip.add("This shard is in constant self-conflict");
+				tooltip.add("");
+				tooltip.add("Chaosstone is the polar opposite of");
+				tooltip.add("Orderstone, a material locked in a");
+				tooltip.add("constant war with itself. It looks like");
+				tooltip.add("it might tear apart at any moment.");
+				break;
+			case EARTHSTONE:
+				tooltip.add("This shard is surprisingly heavy");
+				tooltip.add("");
+				tooltip.add("Earthstone is a solid, dense material.");
+				tooltip.add("It is also somewhat porous, and absorbs");
+				tooltip.add("other substances well.");
+				break;
+			case AIRSTONE:
+				tooltip.add("This shard is surprisingly light");
+				tooltip.add("");
+				tooltip.add("Airstone is incredibly light, yet incredibly");
+				tooltip.add("fragile. It floats slowly to the ground, but");
+				tooltip.add("can shatter from a light breeze.");
+				break;
+			case DEBUG:
+				tooltip.add("This shard is awesome");
+				tooltip.add("");
+				tooltip.add("You shouldn't have this, why do you have this?");
+				break;
+			default:
+				break;
+		}
+	}
 
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
