@@ -198,6 +198,11 @@ public class ItemBaseShard extends BaseItem
 		}
 	}
 	
+	public static ItemStack getShardStack(int amt, EnumShardType type)
+	{
+		return new ItemStack(ItemRegister.itemShard, amt, type.ordinal());
+	}
+	
 	public enum EnumShardType implements IStringSerializable
 	{
 		FYRESTONE("fyrestone"),
