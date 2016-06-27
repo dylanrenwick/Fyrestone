@@ -1,6 +1,7 @@
 package com.skidsdev.fyrestone;
 
 import com.skidsdev.fyrestone.tile.TileEntityRitualCircle;
+import com.skidsdev.fyrestone.utils.LootHandler;
 import com.skidsdev.fyrestone.world.FyrestoneWorldGenerator;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -30,6 +31,6 @@ public class CommonProxy
 	
 	public void postInit(FMLPostInitializationEvent e)
 	{
-		
+		LootHandler.register();
 	}
 }
