@@ -61,14 +61,17 @@ public class Config
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemFyrestoneSword), 0, new ItemStack(ItemRegister.itemFyrestoneIngot, 2), new ItemStack(Items.IRON_SWORD)));
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.WATERSTONE), 0, new ItemStack(ItemRegister.itemFyrestoneCatalyst), ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), new ItemStack(Items.WATER_BUCKET), new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())));
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemEarthstoneIngot), 0, ItemBaseShard.getShardStack(1, EnumShardType.EARTHSTONE), new ItemStack(Items.IRON_INGOT)));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemEarthstoneSword), 0, new ItemStack(ItemRegister.itemEarthstoneIngot, 2), new ItemStack(ItemRegister.itemMysticalOrb), new ItemStack(Items.STICK)));
 		
 		//Alchemy Rituals
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.WATERSTONE), 1, ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())));
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.EARTHSTONE), 1, ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), new ItemStack(Blocks.DIRT), new ItemStack(ItemRegister.itemFyrestoneCatalyst)));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemPlagueEssence), 1, ItemBaseShard.getShardStack(1, EnumShardType.WATERSTONE), new ItemStack(Items.ROTTEN_FLESH, 2)));
 		
 		//Imbuing Rituals
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.EARTHSTONE), 2, ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), new ItemStack(Blocks.DIRT)));
-		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemEarthstoneSword), 2, new ItemStack(ItemRegister.itemEarthstoneIngot, 2), new ItemStack(ItemRegister.itemMysticalOrb), new ItemStack(Items.STICK)));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemPlagueCore), 2, new ItemStack(ItemRegister.itemMysticalOrb), new ItemStack(ItemRegister.itemPlagueEssence, 2)));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemPlagueblade), 2, new ItemStack(ItemRegister.itemPlagueCore), new ItemStack(ItemRegister.itemEarthstoneSword)));
 	}
 	
 	private void processConfigFile()

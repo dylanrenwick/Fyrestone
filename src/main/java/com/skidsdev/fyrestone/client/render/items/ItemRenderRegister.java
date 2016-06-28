@@ -16,8 +16,11 @@ public class ItemRenderRegister
 		reg(ItemRegister.itemFyrestoneIngot);
 		reg(ItemRegister.itemEarthstoneIngot);
 		reg(ItemRegister.itemMysticalOrb);
+		reg(ItemRegister.itemPlagueEssence);
+		reg(ItemRegister.itemPlagueCore);
 		reg(ItemRegister.itemFyrestoneSword);
 		reg(ItemRegister.itemEarthstoneSword);
+		reg(ItemRegister.itemPlagueblade);
 		reg(ItemRegister.itemFyrestoneCatalyst);
 		
 		for (EnumShardType type : EnumShardType.values())
