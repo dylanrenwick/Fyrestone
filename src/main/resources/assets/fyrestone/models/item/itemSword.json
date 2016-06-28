@@ -1,0 +1,29 @@
+{
+    "parent": "item/iron_sword",
+    "overrides": [
+        {
+            "predicate": {
+                "sword": 0
+            },
+            "model": "fyrestone:item/itemFyrestoneSword"
+        },
+        {
+            "predicate": {
+                "sword": 1
+            },
+            "model": "fyrestone:item/itemEarthstoneSword"
+        },
+        {
+            "predicate": {
+                "sword": 2
+            },
+            "model": "fyrestone:item/itemPlagueblade"
+        },
+        {
+            "predicate": {
+                "sword": 3
+            },
+            "model": "fyrestone:item/itemFlamevenom"
+        }
+    ]
+}

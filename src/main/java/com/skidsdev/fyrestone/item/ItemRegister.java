@@ -14,13 +14,10 @@ public final class ItemRegister
 	public static Item itemMysticalOrb;
 	public static Item itemPlagueEssence;
 	public static Item itemPlagueCore;
-	public static Item itemFyrestoneSword;
-	public static Item itemEarthstoneSword;
-	public static Item itemPlagueblade;
+	public static Item itemSword;
 	public static Item itemFyrestoneCatalyst;
 	
 	public static ToolMaterial FYRESTONE = EnumHelper.addToolMaterial("FYRESTONE", 2, 500, 10.0F, 2.0F, 18);
-	public static ToolMaterial EARTHSTONE = EnumHelper.addToolMaterial("EARTHSTONE", 3, 2500, 14.0F, 1.4F, 22);
 	
 	public static final void createItems()
 	{
@@ -31,9 +28,7 @@ public final class ItemRegister
 		GameRegistry.register(itemPlagueEssence = new BaseItem("itemPlagueEssence"));
 		GameRegistry.register(itemPlagueCore = new BaseItem("itemPlagueCore"));
 		GameRegistry.register(itemFyrestoneCatalyst = new BaseItem("itemFyrestoneCatalyst"));
-		GameRegistry.register(itemFyrestoneSword = new ItemFyrestoneSword("itemFyrestoneSword", FYRESTONE));
-		GameRegistry.register(itemEarthstoneSword = new ItemEarthstoneSword("itemEarthstoneSword", EARTHSTONE));
-		GameRegistry.register(itemPlagueblade = new ItemPlagueblade("itemPlagueblade", EARTHSTONE));
+		GameRegistry.register(itemSword = new ItemBaseSword(FYRESTONE, "itemSword"));
 		
 		OreDictionary.registerOre("ingotFyrestone", itemFyrestoneIngot);
 		OreDictionary.registerOre("ingotEarthstone", itemEarthstoneIngot);
