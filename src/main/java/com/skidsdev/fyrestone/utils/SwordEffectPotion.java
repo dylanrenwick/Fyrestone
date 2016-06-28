@@ -24,6 +24,6 @@ public class SwordEffectPotion implements ISwordEffect
 	@Override
 	public void ApplyEffect(EntityLivingBase entity)
 	{
-		entity.addPotionEffect(effect);
+		entity.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier()));
 	}
 }
