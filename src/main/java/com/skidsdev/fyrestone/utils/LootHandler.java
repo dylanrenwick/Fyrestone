@@ -55,6 +55,11 @@ public class LootHandler
 		{
 			lp.addItem(createLootEntry(ItemRegister.itemMysticalOrb, 0, 1, 1, 0.1));
 		}
+		
+		if (!lp.isEmpty())
+		{
+			table.addPool(lp);
+		}
 	}
 	
 	private LootPoolEntry createLootEntry(Item item, int meta, int minSize, int maxSize, double chance)
@@ -116,6 +121,11 @@ public class LootHandler
 					stacks.add(entry.createStack(random));
 				}
 			}
+		}
+		
+		public boolean isEmpty()
+		{
+			return items.isEmpty();
 		}
 	}
 }
