@@ -6,12 +6,12 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.skidsdev.fyrestone.item.ItemBaseShard.EnumShardType;
+import com.skidsdev.fyrestone.item.swordeffect.ISwordEffect;
+import com.skidsdev.fyrestone.item.swordeffect.SwordEffectFire;
+import com.skidsdev.fyrestone.item.swordeffect.SwordEffectPotion;
+import com.skidsdev.fyrestone.item.swordeffect.SwordEffectWaterstone;
 import com.skidsdev.fyrestone.utils.Helper;
-import com.skidsdev.fyrestone.utils.ISwordEffect;
 import com.skidsdev.fyrestone.utils.ItemNBTHelper;
-import com.skidsdev.fyrestone.utils.SwordEffectFire;
-import com.skidsdev.fyrestone.utils.SwordEffectPotion;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -36,13 +36,13 @@ public class ItemBaseSword extends ItemSword
 		this.setRegistryName(regName);
 		this.setUnlocalizedName(this.getRegistryName().toString());
 		this.addPropertyOverride(new ResourceLocation("sword"), new IItemPropertyGetter()
-        {
-            @SideOnly(Side.CLIENT)
-            public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
-            {
-                return ItemNBTHelper.getInt(stack, "sword_type", 0);
-            }
-        });
+		{
+		    @SideOnly(Side.CLIENT)
+		    public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
+		    {
+		        return ItemNBTHelper.getInt(stack, "sword_type", 0);
+		    }
+		});
 	}
 	
 	@Override
@@ -107,28 +107,34 @@ public class ItemBaseSword extends ItemSword
 	{
 		FYRESTONE_SWORD
 		(
-				"fyrestone",
-				Helper.formatTooltip(""),
-				new SwordEffectFire(5)
+			"fyrestone",
+			Helper.formatTooltip(""),
+			new SwordEffectFire(5)
 		),
 		EARTHSTONE_SWORD
 		(
-				"earthstone",
-				Helper.formatTooltip(""),
-				new SwordEffectPotion(Potion.getPotionById(2), 80, 2)
+			"earthstone",
+			Helper.formatTooltip(""),
+			new SwordEffectPotion(Potion.getPotionById(2), 80, 2)
 		),
 		PLAGUEBLADE
 		(
-				"plagueblade",
-				Helper.formatTooltip(""),
-				new SwordEffectPotion(Potion.getPotionById(19), 50, 1)
+			"plagueblade",
+			Helper.formatTooltip(""),
+			new SwordEffectPotion(Potion.getPotionById(19), 50, 1)
 		),
 		FLAMEVENOM
 		(
-				"flamevenom",
-				Helper.formatTooltip(""),
-				new SwordEffectFire(3), 
-				new SwordEffectPotion(Potion.getPotionById(19), 40, 1)
+			"flamevenom",
+			Helper.formatTooltip(""),
+			new SwordEffectFire(3), 
+			new SwordEffectPotion(Potion.getPotionById(19), 40, 1)
+		),
+		WATERSTONE_SWORD
+		(
+			"waterstone",
+			Helper.formatTooltip(""),
+			new SwordEffectWaterstone()
 		);
 		
 		private List<ISwordEffect> effects;

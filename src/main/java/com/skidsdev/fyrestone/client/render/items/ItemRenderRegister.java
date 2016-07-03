@@ -18,6 +18,7 @@ public class ItemRenderRegister
 		reg(ItemRegister.itemMysticalOrb);
 		reg(ItemRegister.itemPlagueEssence);
 		reg(ItemRegister.itemPlagueCore);
+		reg(ItemRegister.itemBlazingCore);
 		reg(ItemRegister.itemSword);
 		reg(ItemRegister.itemFyrestoneCatalyst);
 		

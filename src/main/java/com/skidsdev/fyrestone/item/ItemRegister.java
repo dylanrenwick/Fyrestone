@@ -14,6 +14,7 @@ public final class ItemRegister
 	public static Item itemMysticalOrb;
 	public static Item itemPlagueEssence;
 	public static Item itemPlagueCore;
+	public static Item itemBlazingCore;
 	public static Item itemSword;
 	public static Item itemFyrestoneCatalyst;
 	
@@ -27,6 +28,7 @@ public final class ItemRegister
 		GameRegistry.register(itemMysticalOrb = new BaseItem("itemMysticalOrb"));
 		GameRegistry.register(itemPlagueEssence = new BaseItem("itemPlagueEssence"));
 		GameRegistry.register(itemPlagueCore = new BaseItem("itemPlagueCore"));
+		GameRegistry.register(itemBlazingCore = new BaseItem("itemBlazingCore"));
 		GameRegistry.register(itemFyrestoneCatalyst = new BaseItem("itemFyrestoneCatalyst"));
 		GameRegistry.register(itemSword = new ItemBaseSword(FYRESTONE, "itemSword"));
 		

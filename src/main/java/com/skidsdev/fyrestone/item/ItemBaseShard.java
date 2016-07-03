@@ -84,6 +84,13 @@ public class ItemBaseShard extends BaseItem
 				tooltip.add("fragile. It floats slowly to the ground, but");
 				tooltip.add("can shatter from a light breeze.");
 				break;
+			case BLAZESTONE:
+				tooltip.add("This shard burns brightly");
+				tooltip.add("");
+				tooltip.add("Blazestone is perhaps the only material hotter");
+				tooltip.add("than Fyrestone. It slowly builds up a coating");
+				tooltip.add("of hot ash, seemingly from thin air.");
+				break;
 			case DEBUG:
 				tooltip.add("This shard is awesome");
 				tooltip.add("");
@@ -211,6 +218,7 @@ public class ItemBaseShard extends BaseItem
 		CHAOSSTONE("chaosstone"),
 		EARTHSTONE("earthstone"),
 		AIRSTONE("airstone"),
+		BLAZESTONE("blazestone"),
 		DEBUG("debug");
 		
 		private String name;
