@@ -31,6 +31,11 @@ public class RitualRecipeManager
 		return null;
 	}
 	
+	public static List<RitualRecipe> getRecipes()
+	{
+		return new ArrayList<RitualRecipe>(recipes);
+	}
+	
 	private static boolean compareInputSets(List<ItemStack> firstSet, List<ItemStack> secondSet)
 	{
 		if(firstSet.size() != secondSet.size()) return false;

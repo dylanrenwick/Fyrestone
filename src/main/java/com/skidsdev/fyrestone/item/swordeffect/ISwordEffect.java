@@ -1,4 +1,4 @@
-package com.skidsdev.fyrestone.utils;
+package com.skidsdev.fyrestone.item.swordeffect;
 
 import net.minecraft.entity.EntityLivingBase;
 
