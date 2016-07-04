@@ -1,8 +1,9 @@
 package com.skidsdev.fyrestone.item.swordeffect;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 
-public class SwordEffectFire implements ISwordEffect
+public class SwordEffectFire implements ISwordEffectOnHit
 {
 	private int duration;
 	
@@ -12,7 +13,7 @@ public class SwordEffectFire implements ISwordEffect
 	}
 	
 	@Override
-	public void ApplyEffect(EntityLivingBase entity)
+	public void ApplyEffect(EntityLivingBase entity, EntityPlayer player)
 	{
 		entity.setFire(duration);
 	}

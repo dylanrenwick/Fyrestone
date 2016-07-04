@@ -1,9 +1,11 @@
 package com.skidsdev.fyrestone;
 
+import com.skidsdev.fyrestone.handler.PlayerTickHandler;
 import com.skidsdev.fyrestone.tile.TileEntityRitualCircle;
 import com.skidsdev.fyrestone.utils.LootHandler;
 import com.skidsdev.fyrestone.world.FyrestoneWorldGenerator;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -20,6 +22,8 @@ public class CommonProxy
 		this.modConfig.setupItems();
 		this.modConfig.setupBlocks();
 		this.modConfig.setupCrafting();
+		
+		MinecraftForge.EVENT_BUS.register(new PlayerTickHandler());
 		
 		GameRegistry.registerTileEntity(TileEntityRitualCircle.class, "ritualcircle");
 	}

@@ -57,7 +57,6 @@ public class Config
 	{
 		GameRegistry.addRecipe(new ItemStack(BlockRegister.blockFyrestoneBlock), new Object[] {"###", "###", "###", '#', ItemRegister.itemFyrestoneIngot});
 		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegister.itemFyrestoneIngot, 9), BlockRegister.blockFyrestoneBlock);
-		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegister.itemGuide), new ItemStack(Items.BOOK), ItemBaseShard.getShardStack(1,  EnumShardType.FYRESTONE));
 		
 		//Metallurgy Rituals
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemFyrestoneIngot), 0, ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), new ItemStack(Items.IRON_INGOT)));

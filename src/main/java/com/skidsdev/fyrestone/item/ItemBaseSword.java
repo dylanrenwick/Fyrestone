@@ -7,7 +7,12 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.skidsdev.fyrestone.item.swordeffect.ISwordEffect;
+import com.skidsdev.fyrestone.item.swordeffect.ISwordEffectOnHit;
+import com.skidsdev.fyrestone.item.swordeffect.ISwordEffectOnSwing;
+import com.skidsdev.fyrestone.item.swordeffect.ISwordEffectOnTickInHand;
+import com.skidsdev.fyrestone.item.swordeffect.ISwordEffectOnUse;
 import com.skidsdev.fyrestone.item.swordeffect.SwordEffectFire;
+import com.skidsdev.fyrestone.item.swordeffect.SwordEffectFireball;
 import com.skidsdev.fyrestone.item.swordeffect.SwordEffectPotion;
 import com.skidsdev.fyrestone.item.swordeffect.SwordEffectWaterstone;
 import com.skidsdev.fyrestone.utils.Helper;
@@ -22,6 +27,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -46,14 +52,35 @@ public class ItemBaseSword extends ItemSword
 	}
 	
 	@Override
-	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
+	public boolean onEntitySwing(EntityLivingBase entity, ItemStack stack)
 	{
-		if (entity instanceof EntityLivingBase)
+		if (entity instanceof EntityPlayer)
 		{
-			applyEffectToEntity(stack, (EntityLivingBase)entity);
+			applyEffectOnSwing(stack, (EntityPlayer)entity);
 		}
 		
 		return false;
+	}
+	
+	@Override
+	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
+	{
+		boolean flag = false;
+		
+		if (entity instanceof EntityLivingBase)
+		{
+			EnumSwordType type = EnumSwordType.values()[ItemNBTHelper.getInt(stack, "sword_type", 0)];
+			float attackDamage = type.getAttackDamage();
+			
+			boolean isCrit = (player.fallDistance > 0.2F);
+			if (isCrit) attackDamage *= 1.2;
+			
+			flag = entity.attackEntityFrom(DamageSource.causePlayerDamage(player), attackDamage);
+			
+			applyEffectOnHit(stack, (EntityLivingBase)entity, player);
+		}
+		
+		return flag;
 	}
 	
 	@Override
@@ -67,6 +94,7 @@ public class ItemBaseSword extends ItemSword
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
 	{
 		EnumSwordType type = EnumSwordType.values()[ItemNBTHelper.getInt(stack, "sword_type", 0)];
+		
 		List<String> swordTooltip = type.getTooltip();
 		for(String line : swordTooltip)
 		{
@@ -85,15 +113,80 @@ public class ItemBaseSword extends ItemSword
 		}
 	}
 	
-	private void applyEffectToEntity(ItemStack stack, EntityLivingBase entity)
+	private void applyEffectOnHit(ItemStack stack, EntityLivingBase entity, EntityPlayer player)
 	{
 		EnumSwordType type = EnumSwordType.values()[ItemNBTHelper.getInt(stack, "sword_type", 0)];
 		List<ISwordEffect> effects = type.getEffects();
 		
-		for(ISwordEffect effect : effects)
+		for(ISwordEffectOnHit effect : getEffectsOnHit(effects))
+		{
+			effect.ApplyEffect(entity, player);
+		}
+	}
+	
+	private void applyEffectOnTickInHand(ItemStack stack, EntityLivingBase entity)
+	{
+		EnumSwordType type = EnumSwordType.values()[ItemNBTHelper.getInt(stack, "sword_type", 0)];
+		List<ISwordEffect> effects = type.getEffects();
+		
+		for(ISwordEffectOnTickInHand effect : getEffectsOnTickInHand(effects))
 		{
 			effect.ApplyEffect(entity);
 		}
+	}
+	
+	private void applyEffectOnUse(ItemStack stack, EntityLivingBase entity)
+	{
+		EnumSwordType type = EnumSwordType.values()[ItemNBTHelper.getInt(stack, "sword_type", 0)];
+		List<ISwordEffect> effects = type.getEffects();
+		
+		for(ISwordEffectOnUse effect : getEffectsOnUse(effects))
+		{
+			effect.ApplyEffect(entity);
+		}
+	}
+	
+	private void applyEffectOnSwing(ItemStack stack, EntityPlayer player)
+	{
+		EnumSwordType type = EnumSwordType.values()[ItemNBTHelper.getInt(stack, "sword_type", 0)];
+		List<ISwordEffect> effects = type.getEffects();
+		
+		for(ISwordEffectOnSwing effect : getEffectsOnSwing(effects))
+		{
+			effect.ApplyEffect(player);
+		}
+	}
+
+	private List<ISwordEffectOnHit> getEffectsOnHit(List<ISwordEffect> effects)
+	{
+		return getEffectsOfType(effects, ISwordEffectOnHit.class);
+	}
+	
+	private List<ISwordEffectOnTickInHand> getEffectsOnTickInHand(List<ISwordEffect> effects)
+	{
+		return getEffectsOfType(effects, ISwordEffectOnTickInHand.class);
+	}
+	
+	private List<ISwordEffectOnUse> getEffectsOnUse(List<ISwordEffect> effects)
+	{
+		return getEffectsOfType(effects, ISwordEffectOnUse.class);
+	}
+	
+	private List<ISwordEffectOnSwing> getEffectsOnSwing(List<ISwordEffect> effects)
+	{
+		return getEffectsOfType(effects, ISwordEffectOnSwing.class);
+	}
+	
+	private <T extends ISwordEffect> List<T> getEffectsOfType(List<ISwordEffect> effects, Class<T> type)
+	{
+		ArrayList<T> list = new ArrayList<T>();
+		
+		for(ISwordEffect effect : effects)
+		{
+			if (type.isInstance(effect)) list.add((T)effect);
+		}
+		
+		return list;
 	}
 	
 	public static ItemStack getSwordStack(EnumSwordType type)
@@ -107,43 +200,53 @@ public class ItemBaseSword extends ItemSword
 	{
 		FYRESTONE_SWORD
 		(
-			"fyrestone",
+			"fyrestone", 1.6f, 6.0f,
 			Helper.formatTooltip(""),
 			new SwordEffectFire(5)
 		),
 		EARTHSTONE_SWORD
 		(
-			"earthstone",
+			"earthstone", 1.0f, 7.0f,
 			Helper.formatTooltip(""),
 			new SwordEffectPotion(Potion.getPotionById(2), 80, 2)
 		),
 		PLAGUEBLADE
 		(
-			"plagueblade",
+			"plagueblade", 1.6f, 7.0f,
 			Helper.formatTooltip(""),
 			new SwordEffectPotion(Potion.getPotionById(19), 50, 1)
 		),
 		FLAMEVENOM
 		(
-			"flamevenom",
+			"flamevenom", 1.6f, 6.0f,
 			Helper.formatTooltip(""),
 			new SwordEffectFire(3), 
 			new SwordEffectPotion(Potion.getPotionById(19), 40, 1)
 		),
 		WATERSTONE_SWORD
 		(
-			"waterstone",
+			"waterstone", 1.6f, 6.0f,
 			Helper.formatTooltip(""),
-			new SwordEffectWaterstone()
+			new SwordEffectWaterstone(12)
+		),
+		BLAZESTONE_SWORD
+		(
+			"blazestone", 1.6f, 8.0f,
+			Helper.formatTooltip(""),
+			new SwordEffectFireball()
 		);
 		
 		private List<ISwordEffect> effects;
 		private List<String> tooltip;
+		private float attackSpeed;
+		private float attackDamage;
 		private String name;
 		
-		private EnumSwordType(String name, List<String> tooltip, ISwordEffect... effects)
+		private EnumSwordType(String name, float atkSpeed, float atkDamage, List<String> tooltip, ISwordEffect... effects)
 		{
 			this.name = name;
+			this.attackSpeed = atkSpeed;
+			this.attackDamage = atkDamage;
 			this.tooltip = tooltip;
 			this.effects = Arrays.asList(effects);
 		}
@@ -156,6 +259,16 @@ public class ItemBaseSword extends ItemSword
 		public List<String> getTooltip()
 		{
 			return (List)new ArrayList<String>(tooltip);
+		}
+		
+		public float getAttackSpeed()
+		{
+			return attackSpeed;
+		}
+		
+		public float getAttackDamage()
+		{
+			return attackDamage;
 		}
 		
 		public String getName()

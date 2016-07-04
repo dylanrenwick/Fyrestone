@@ -24,6 +24,18 @@
                 "sword": 3
             },
             "model": "fyrestone:item/itemFlamevenom"
+        },
+        {
+            "predicate": {
+                "sword": 4
+            },
+            "model": "fyrestone:item/itemWaterstoneSword"
+        },
+        {
+            "predicate": {
+                "sword": 5
+            },
+            "model": "fyrestone:item/itemBlazestoneSword"
         }
     ]
 }
