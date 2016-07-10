@@ -234,6 +234,11 @@ public class ItemBaseSword extends ItemSword
 			"blazestone", 1.6f, 8.0f,
 			Helper.formatTooltip(""),
 			new SwordEffectFireball()
+		),
+		AIRSTONE_SWORD
+		(
+			"airstone", 1.6f, 26.0f,
+			Helper.formatTooltip("")
 		);
 		
 		private List<ISwordEffect> effects;

@@ -19,6 +19,7 @@ item.fyrestone:itemSword_plagueblade.name=Plagueblade
 item.fyrestone:itemSword_flamevenom.name=Flamevenom
 item.fyrestone:itemSword_waterstone.name=Waterstone Sword
 item.fyrestone:itemSword_blazestone.name=Blazing Scimitar
+item.fyrestone:itemSword_airstone.name=Airstone Broadsword
 item.fyrestone:itemFyrestoneCatalyst.name=Fyrestone Catalyst
 tile.fyrestone:blockFyrestoneOre.name=Fyrestone Ore
 tile.fyrestone:blockFyrestoneBlock.name=Fyrestone Block

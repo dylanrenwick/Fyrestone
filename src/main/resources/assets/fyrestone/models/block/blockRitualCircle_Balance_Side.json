@@ -1,0 +1,6 @@
+{
+    "parent": "fyrestone:block/blockRitualCircle",
+    "textures": {
+        "circle": "fyrestone:blocks/blockRitualCircle_Balance_Side"
+    }
+}

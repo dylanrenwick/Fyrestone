@@ -45,7 +45,7 @@ public class RitualRecipeManager
 			boolean equal = false;
 			for (ItemStack secStack : secondSet)
 			{
-				if (ItemStack.areItemStacksEqual(stack, secStack))
+				if (ItemStack.areItemStacksEqual(stack, secStack) && ItemStack.areItemStackTagsEqual(stack, secStack))
 				{
 					equal = true;
 					break;

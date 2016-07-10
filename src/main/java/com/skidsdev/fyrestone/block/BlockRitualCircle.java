@@ -196,7 +196,8 @@ public class BlockRitualCircle extends BlockBase
 	{
 		METALLURGY("metallurgy"),
 		ALCHEMY("alchemy"),
-		IMBUING("imbuing");
+		IMBUING("imbuing"),
+		BALANCE("balance");
 		
 		@Override
 		public String toString()

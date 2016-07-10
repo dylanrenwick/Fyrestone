@@ -200,6 +200,8 @@ public class ItemBaseShard extends BaseItem
 				return defaultState.withProperty(BlockRitualCircle.RITUAL_TYPE, EnumRitualType.ALCHEMY);
 			case EARTHSTONE:
 				return defaultState.withProperty(BlockRitualCircle.RITUAL_TYPE, EnumRitualType.IMBUING);
+			case ORDERSTONE:
+				return defaultState.withProperty(BlockRitualCircle.RITUAL_TYPE, EnumRitualType.BALANCE);
 			default:
 				return null;			
 		}

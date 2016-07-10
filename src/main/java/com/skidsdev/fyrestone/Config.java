@@ -11,6 +11,7 @@ import com.skidsdev.fyrestone.item.ItemBaseSword.EnumSwordType;
 import com.skidsdev.fyrestone.item.ItemRegister;
 import com.skidsdev.fyrestone.utils.RitualRecipe;
 import com.skidsdev.fyrestone.utils.RitualRecipeManager;
+import com.skidsdev.fyrestone.utils.VersionInfo;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -20,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.RecipeSorter;
 
 public class Config
 {
@@ -55,6 +57,8 @@ public class Config
 	
 	public void setupCrafting()
 	{
+		RecipeSorter.register(VersionInfo.ModId + ":ritualRecipe", RitualRecipeManager.class, RecipeSorter.Category.SHAPELESS, "");
+		
 		GameRegistry.addRecipe(new ItemStack(BlockRegister.blockFyrestoneBlock), new Object[] {"###", "###", "###", '#', ItemRegister.itemFyrestoneIngot});
 		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegister.itemFyrestoneIngot, 9), BlockRegister.blockFyrestoneBlock);
 		
@@ -70,6 +74,7 @@ public class Config
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.WATERSTONE), 1, ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())));
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.EARTHSTONE), 1, ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), new ItemStack(Blocks.DIRT), new ItemStack(ItemRegister.itemFyrestoneCatalyst)));
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemPlagueEssence), 1, ItemBaseShard.getShardStack(1, EnumShardType.WATERSTONE), new ItemStack(Items.ROTTEN_FLESH, 2), new ItemStack(Items.GLASS_BOTTLE)));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.ORDERSTONE), 1, ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), ItemBaseShard.getShardStack(1, EnumShardType.WATERSTONE), new ItemStack(ItemRegister.itemFyrestoneCatalyst), new ItemStack(Items.NETHER_STAR)));
 		
 		//Imbuing Rituals
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.EARTHSTONE), 2, ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), new ItemStack(Blocks.DIRT)));
@@ -78,6 +83,14 @@ public class Config
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseSword.getSwordStack(EnumSwordType.FLAMEVENOM), 2, new ItemStack(ItemRegister.itemPlagueCore), ItemBaseSword.getSwordStack(EnumSwordType.FYRESTONE_SWORD)));
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.BLAZESTONE), 2, ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), new ItemStack(Items.BLAZE_POWDER, 2), new ItemStack(Items.LAVA_BUCKET)));
 		RitualRecipeManager.RegisterRecipe(new RitualRecipe(new ItemStack(ItemRegister.itemBlazingCore), 2, new ItemStack(ItemRegister.itemMysticalOrb), ItemBaseShard.getShardStack(2, EnumShardType.BLAZESTONE)));
+	
+		//Balancing Rituals
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.AIRSTONE), 3, ItemBaseShard.getShardStack(1, EnumShardType.EARTHSTONE)));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.EARTHSTONE), 3, ItemBaseShard.getShardStack(1, EnumShardType.AIRSTONE)));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.WATERSTONE), 3, ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE)));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.FYRESTONE), 3, ItemBaseShard.getShardStack(1, EnumShardType.WATERSTONE)));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.CHAOSSTONE), 3, ItemBaseShard.getShardStack(1, EnumShardType.ORDERSTONE)));
+		RitualRecipeManager.RegisterRecipe(new RitualRecipe(ItemBaseShard.getShardStack(1, EnumShardType.ORDERSTONE), 3, ItemBaseShard.getShardStack(1, EnumShardType.CHAOSSTONE)));
 	}
 	
 	private void processConfigFile()
