@@ -1,10 +1,9 @@
 package com.skidsdev.fyrestone.block;
 
-import com.skidsdev.fyrestone.block.BlockRitualCircle.EnumRitualType;
 import com.skidsdev.fyrestone.tile.TileEntityRitualCircle;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -30,6 +29,18 @@ public class BlockRitualCircle extends BlockBase
 	}
 	
 	@Override
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block block)
+	{
+		BlockPos platPos = pos.down();
+		
+		if (((EnumRitualType)state.getValue(RITUAL_TYPE) != EnumRitualType.BALANCE && worldIn.getBlockState(platPos).getBlock() != Blocks.STONE) ||
+				((EnumRitualType)state.getValue(RITUAL_TYPE) == EnumRitualType.BALANCE && worldIn.getBlockState(platPos).getBlock() != Blocks.OBSIDIAN))
+		{
+			this.onBlockDestroyedByPlayer((World)worldIn, pos, state);
+		}
+	}
+	
+	@Override
 	public TileEntity createTileEntity(World worldIn, IBlockState state)
 	{
 		if (getIsMasterBlock(state)) return new TileEntityRitualCircle();
@@ -47,9 +58,7 @@ public class BlockRitualCircle extends BlockBase
 	
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
-	{
-		if (getIsMasterBlock(state)) return state.withProperty(CIRCLE_PART, EnumCirclePart.CENTER);
-		
+	{		
 		//Pos X = East, Pos Z = South
 		BlockPos masterPos = getMasterBlock(worldIn, pos);
 		if (masterPos == null) return state;

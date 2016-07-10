@@ -84,7 +84,7 @@ public class ItemBaseShard extends BaseItem
 				tooltip.add("fragile. It floats slowly to the ground, but");
 				tooltip.add("can shatter from a light breeze.");
 				break;
-			case BLAZESTONE:
+			case BRIMSTONE:
 				tooltip.add("This shard burns brightly");
 				tooltip.add("");
 				tooltip.add("Blazestone is perhaps the only material hotter");
@@ -109,11 +109,24 @@ public class ItemBaseShard extends BaseItem
 		{
 			IBlockState ritualCircle = getRitualCircleBlock(stack);
 			
-			if (ritualCircle != null)
+			if (ritualCircle != null && ritualCircle != BlockRegister.blockRitualCircle.getDefaultState().withProperty(BlockRitualCircle.RITUAL_TYPE, EnumRitualType.BALANCE))
 			{
 				worldIn.setBlockState(new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ()), ritualCircle, 3);
 				BlockRegister.blockRitualCircle.onBlockPlacedBy(worldIn, pos.add(0, 1, 0), ritualCircle, player, stack);
 				stack.stackSize -= 1;
+			}
+		}
+		
+		if (getEndStonePlatform(worldIn, pos) && hitY == 1.0f)
+		{
+			IBlockState ritualCircle = getRitualCircleBlock(stack);
+			
+			if (ritualCircle == BlockRegister.blockRitualCircle.getDefaultState().withProperty(BlockRitualCircle.RITUAL_TYPE, EnumRitualType.BALANCE))
+			{
+				worldIn.setBlockState(new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ()), ritualCircle, 3);
+				BlockRegister.blockRitualCircle.onBlockPlacedBy(worldIn, pos.add(0, 1, 0), ritualCircle, player, stack);
+				stack.stackSize -= 1;
+				
 			}
 		}
 		
@@ -158,6 +171,30 @@ public class ItemBaseShard extends BaseItem
 				Block block = worldIn.getBlockState(newPos).getBlock();
 				
 				if (block != Blocks.STONE) return false;
+				
+				for (int k = 1; k < 3; k++)
+				{
+					newPos = newPos.add(0, 1, 0);
+					block = worldIn.getBlockState(newPos).getBlock();
+					
+					if (block != Blocks.AIR) return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+	
+	private boolean getEndStonePlatform(World worldIn, BlockPos pos)
+	{
+		for (int i = -1; i < 2; i++)
+		{
+			for (int j = -1; j < 2; j++)
+			{
+				BlockPos newPos = new BlockPos(pos.getX() + i, pos.getY(), pos.getZ() + j);
+				Block block = worldIn.getBlockState(newPos).getBlock();
+				
+				if (block != Blocks.OBSIDIAN) return false;
 				
 				for (int k = 1; k < 3; k++)
 				{
@@ -220,7 +257,7 @@ public class ItemBaseShard extends BaseItem
 		CHAOSSTONE("chaosstone"),
 		EARTHSTONE("earthstone"),
 		AIRSTONE("airstone"),
-		BLAZESTONE("blazestone"),
+		BRIMSTONE("brimstone"),
 		DEBUG("debug");
 		
 		private String name;
