@@ -52,6 +52,14 @@ public class ItemBaseSword extends ItemSword
 	}
 	
 	@Override
+	public int getMaxDamage(ItemStack stack)
+	{
+		EnumSwordType type = EnumSwordType.values()[ItemNBTHelper.getInt(stack, "sword_type", 0)];
+		
+		return type.getDurability();
+	}
+	
+	@Override
 	public boolean onEntitySwing(EntityLivingBase entity, ItemStack stack)
 	{
 		if (entity instanceof EntityPlayer)
@@ -78,6 +86,10 @@ public class ItemBaseSword extends ItemSword
 			flag = entity.attackEntityFrom(DamageSource.causePlayerDamage(player), attackDamage);
 			
 			applyEffectOnHit(stack, (EntityLivingBase)entity, player);
+			
+			if (flag) stack.damageItem(1, player);
+			
+			if (stack.stackSize < 1) player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
 		}
 		
 		return flag;
@@ -120,7 +132,7 @@ public class ItemBaseSword extends ItemSword
 		
 		for(ISwordEffectOnHit effect : getEffectsOnHit(effects))
 		{
-			effect.ApplyEffect(entity, player);
+			effect.ApplyEffect(stack, entity, player);
 		}
 	}
 	
@@ -131,7 +143,7 @@ public class ItemBaseSword extends ItemSword
 		
 		for(ISwordEffectOnTickInHand effect : getEffectsOnTickInHand(effects))
 		{
-			effect.ApplyEffect(entity);
+			effect.ApplyEffect(stack, entity);
 		}
 	}
 	
@@ -142,7 +154,7 @@ public class ItemBaseSword extends ItemSword
 		
 		for(ISwordEffectOnUse effect : getEffectsOnUse(effects))
 		{
-			effect.ApplyEffect(entity);
+			effect.ApplyEffect(stack, entity);
 		}
 	}
 	
@@ -153,7 +165,7 @@ public class ItemBaseSword extends ItemSword
 		
 		for(ISwordEffectOnSwing effect : getEffectsOnSwing(effects))
 		{
-			effect.ApplyEffect(player);
+			effect.ApplyEffect(stack, player);
 		}
 	}
 
@@ -200,44 +212,45 @@ public class ItemBaseSword extends ItemSword
 	{
 		FYRESTONE_SWORD
 		(
-			"fyrestone", 1.6f, 6.0f,
+			"fyrestone", 1.6f, 6.0f, 500,
 			Helper.formatTooltip(""),
 			new SwordEffectFire(5)
 		),
 		EARTHSTONE_SWORD
 		(
-			"earthstone", 1.0f, 7.0f,
+			"earthstone", 1.0f, 7.0f, 1000,
 			Helper.formatTooltip(""),
 			new SwordEffectPotion(Potion.getPotionById(2), 80, 2)
 		),
 		PLAGUEBLADE
 		(
-			"plagueblade", 1.6f, 7.0f,
+			"plagueblade", 1.6f, 7.0f, 1000,
 			Helper.formatTooltip(""),
 			new SwordEffectPotion(Potion.getPotionById(19), 50, 1)
 		),
 		FLAMEVENOM
 		(
-			"flamevenom", 1.6f, 6.0f,
+			"flamevenom", 1.6f, 6.0f, 500,
 			Helper.formatTooltip(""),
 			new SwordEffectFire(3), 
 			new SwordEffectPotion(Potion.getPotionById(19), 40, 1)
 		),
 		WATERSTONE_SWORD
 		(
-			"waterstone", 1.6f, 6.0f,
+			"waterstone", 1.6f, 6.0f, 250,
 			Helper.formatTooltip(""),
 			new SwordEffectWaterstone(12)
 		),
-		BLAZESTONE_SWORD
+		BRIMSTONE_SWORD
 		(
-			"blazestone", 1.6f, 8.0f,
+			"brimstone", 1.6f, 10.0f, 1500,
 			Helper.formatTooltip(""),
-			new SwordEffectFireball()
+			new SwordEffectFireball(),
+			new SwordEffectFire(1)
 		),
 		AIRSTONE_SWORD
 		(
-			"airstone", 1.6f, 26.0f,
+			"airstone", 1.6f, 150.0f, 10,
 			Helper.formatTooltip("")
 		);
 		
@@ -245,13 +258,15 @@ public class ItemBaseSword extends ItemSword
 		private List<String> tooltip;
 		private float attackSpeed;
 		private float attackDamage;
+		private int durability;
 		private String name;
 		
-		private EnumSwordType(String name, float atkSpeed, float atkDamage, List<String> tooltip, ISwordEffect... effects)
+		private EnumSwordType(String name, float atkSpeed, float atkDamage, int durability, List<String> tooltip, ISwordEffect... effects)
 		{
 			this.name = name;
 			this.attackSpeed = atkSpeed;
 			this.attackDamage = atkDamage;
+			this.durability = durability;
 			this.tooltip = tooltip;
 			this.effects = Arrays.asList(effects);
 		}
@@ -274,6 +289,11 @@ public class ItemBaseSword extends ItemSword
 		public float getAttackDamage()
 		{
 			return attackDamage;
+		}
+		
+		public int getDurability()
+		{
+			return durability;
 		}
 		
 		public String getName()

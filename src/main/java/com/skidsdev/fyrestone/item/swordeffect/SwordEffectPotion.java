@@ -2,6 +2,7 @@ package com.skidsdev.fyrestone.item.swordeffect;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
@@ -23,7 +24,7 @@ public class SwordEffectPotion implements ISwordEffectOnHit
 	}
 	
 	@Override
-	public void ApplyEffect(EntityLivingBase entity, EntityPlayer player)
+	public void ApplyEffect(ItemStack stack, EntityLivingBase entity, EntityPlayer player)
 	{
 		entity.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier()));
 	}

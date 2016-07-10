@@ -1,13 +1,13 @@
 package com.skidsdev.fyrestone.item.swordeffect;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntitySmallFireball;
+import net.minecraft.item.ItemStack;
 
 public class SwordEffectFireball implements ISwordEffectOnSwing
 {
 	@Override
-	public void ApplyEffect(EntityPlayer player)
+	public void ApplyEffect(ItemStack stack, EntityPlayer player)
 	{
 		if(!player.worldObj.isRemote)
 		{
@@ -15,6 +15,10 @@ public class SwordEffectFireball implements ISwordEffectOnSwing
 	        entitysmallfireball.posY = player.posY + (double)(player.height / 2.0F) + 0.5D;
 	        entitysmallfireball.shootingEntity = player;
 	        player.worldObj.spawnEntityInWorld(entitysmallfireball);
+	        
+	        stack.damageItem(1, player);
+			
+			if (stack.stackSize < 1) player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
 		}
 	}
 }
