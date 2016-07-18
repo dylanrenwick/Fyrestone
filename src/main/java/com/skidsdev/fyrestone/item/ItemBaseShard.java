@@ -87,7 +87,7 @@ public class ItemBaseShard extends BaseItem
 			case BRIMSTONE:
 				tooltip.add("This shard burns brightly");
 				tooltip.add("");
-				tooltip.add("Blazestone is perhaps the only material hotter");
+				tooltip.add("Brimstone is perhaps the only material hotter");
 				tooltip.add("than Fyrestone. It slowly builds up a coating");
 				tooltip.add("of hot ash, seemingly from thin air.");
 				break;
