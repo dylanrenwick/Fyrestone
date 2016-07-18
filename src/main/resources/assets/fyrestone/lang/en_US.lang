@@ -1,4 +1,5 @@
 < en_US.lang - English localization file for the mod Fyrestone >
+itemGroup.fyrestone=Fyrestone
 item.fyrestone:itemShard_fyrestone.name=Fyrestone Shard
 item.fyrestone:itemShard_waterstone.name=Waterstone Shard
 item.fyrestone:itemShard_orderstone.name=Orderstone Shard

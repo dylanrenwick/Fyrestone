@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.skidsdev.fyrestone.FyrestoneCreativeTabs;
 import com.skidsdev.fyrestone.item.swordeffect.ISwordEffect;
 import com.skidsdev.fyrestone.item.swordeffect.ISwordEffectOnHit;
 import com.skidsdev.fyrestone.item.swordeffect.ISwordEffectOnSwing;
@@ -41,6 +42,7 @@ public class ItemBaseSword extends ItemSword
 		super(material);
 		this.setRegistryName(regName);
 		this.setUnlocalizedName(this.getRegistryName().toString());
+		this.setCreativeTab(FyrestoneCreativeTabs.tabFyrestone);
 		this.addPropertyOverride(new ResourceLocation("sword"), new IItemPropertyGetter()
 		{
 		    @SideOnly(Side.CLIENT)

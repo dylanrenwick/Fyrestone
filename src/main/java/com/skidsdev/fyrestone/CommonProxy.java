@@ -19,8 +19,8 @@ public class CommonProxy
 	{		
 		this.modConfig = new Config(e.getSuggestedConfigurationFile());
 		
-		this.modConfig.setupItems();
 		this.modConfig.setupBlocks();
+		this.modConfig.setupItems();
 		this.modConfig.setupCrafting();
 		
 		MinecraftForge.EVENT_BUS.register(new PlayerTickHandler());

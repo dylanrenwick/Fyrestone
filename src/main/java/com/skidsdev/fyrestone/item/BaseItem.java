@@ -1,5 +1,7 @@
 package com.skidsdev.fyrestone.item;
 
+import com.skidsdev.fyrestone.FyrestoneCreativeTabs;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
@@ -11,6 +13,6 @@ public class BaseItem extends Item
 		
 		this.setRegistryName(regName);
 		this.setUnlocalizedName(this.getRegistryName().toString());
-		this.setCreativeTab(CreativeTabs.MATERIALS);
+		this.setCreativeTab(FyrestoneCreativeTabs.tabFyrestone);
 	}
 }
