@@ -2,6 +2,7 @@ package com.skidsdev.fyrestone;
 
 import com.skidsdev.fyrestone.handler.PlayerTickHandler;
 import com.skidsdev.fyrestone.tile.TileEntityRitualCircle;
+import com.skidsdev.fyrestone.utils.GuiHandler;
 import com.skidsdev.fyrestone.utils.LootHandler;
 import com.skidsdev.fyrestone.world.FyrestoneWorldGenerator;
 
@@ -15,6 +16,8 @@ public class CommonProxy
 {
 	private Config modConfig;
 	
+	private GuiHandler guiHandler;
+	
 	public void preInit(FMLPreInitializationEvent e)
 	{		
 		this.modConfig = new Config(e.getSuggestedConfigurationFile());
@@ -26,6 +29,8 @@ public class CommonProxy
 		MinecraftForge.EVENT_BUS.register(new PlayerTickHandler());
 		
 		GameRegistry.registerTileEntity(TileEntityRitualCircle.class, "ritualcircle");
+		
+		guiHandler = GuiHandler.getInstance();
 	}
 	
 	public void init(FMLInitializationEvent e)

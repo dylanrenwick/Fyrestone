@@ -1,5 +1,8 @@
 package com.skidsdev.fyrestone.item;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.common.util.EnumHelper;
@@ -15,26 +18,42 @@ public final class ItemRegister
 	public static Item itemPlagueEssence;
 	public static Item itemPlagueCore;
 	public static Item itemBlazingCore;
-	public static Item itemSword;
 	public static Item itemFyrestoneCatalyst;
+	public static Item itemGuideBook;
+	public static Item itemSword;
 	
 	public static ToolMaterial FYRESTONE = EnumHelper.addToolMaterial("FYRESTONE", 2, 500, 10.0F, 2.0F, 18);
 	
+	public static List<Item> registeredItems;
+	
 	public static final void createItems()
 	{
-		GameRegistry.register(itemShard = new ItemBaseShard());
-		GameRegistry.register(itemFyrestoneIngot = new BaseItem("itemFyrestoneIngot"));
-		GameRegistry.register(itemEarthstoneIngot = new BaseItem("itemEarthstoneIngot"));
-		GameRegistry.register(itemMysticalOrb = new BaseItem("itemMysticalOrb"));
-		GameRegistry.register(itemPlagueEssence = new BaseItem("itemPlagueEssence"));
-		GameRegistry.register(itemPlagueCore = new BaseItem("itemPlagueCore"));
-		GameRegistry.register(itemBlazingCore = new BaseItem("itemBlazingCore"));
-		GameRegistry.register(itemFyrestoneCatalyst = new BaseItem("itemFyrestoneCatalyst"));
-		GameRegistry.register(itemSword = new ItemBaseSword(FYRESTONE, "itemSword"));
+		registeredItems = new ArrayList<Item>();
 		
-		OreDictionary.registerOre("ingotFyrestone", itemFyrestoneIngot);
-		OreDictionary.registerOre("ingotEarthstone", itemEarthstoneIngot);
-		OreDictionary.registerOre("itemMysticalOrb", itemMysticalOrb);
-		OreDictionary.registerOre("itemFyrestoneCatalyst", itemFyrestoneCatalyst);
+		GameRegistry.register(itemShard = new ItemBaseShard());
+		
+		itemFyrestoneIngot    = registerItem(new BaseItem("itemFyrestoneIngot"), "ingotFyrestone");
+		itemEarthstoneIngot   = registerItem(new BaseItem("itemEarthstoneIngot"), "ingotEarthstone");
+		itemMysticalOrb       = registerItem(new BaseItem("itemMysticalOrb"));
+		itemPlagueEssence     = registerItem(new BaseItem("itemPlagueEssence"));
+		itemPlagueCore        = registerItem(new BaseItem("itemPlagueCore"));
+		itemBlazingCore       = registerItem(new BaseItem("itemBlazingCore"));
+		itemFyrestoneCatalyst = registerItem(new BaseItem("itemFyrestoneCatalyst"));
+		itemGuideBook         = registerItem(new ItemGuideBook());
+		itemSword             = registerItem(new ItemBaseSword(FYRESTONE, "itemSword"));
+	}
+	
+	private static Item registerItem(Item item, String oreDict)
+	{
+		OreDictionary.registerOre(oreDict, registerItem(item));
+		
+		return item;
+	}
+	private static Item registerItem(Item item)
+	{
+		GameRegistry.register(item);
+		registeredItems.add(item);
+		
+		return item;
 	}
 }

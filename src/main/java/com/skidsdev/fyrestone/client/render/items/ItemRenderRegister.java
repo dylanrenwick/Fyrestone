@@ -13,14 +13,10 @@ public class ItemRenderRegister
 {
 	public static void registerItemRenderer()
 	{
-		reg(ItemRegister.itemFyrestoneIngot);
-		reg(ItemRegister.itemEarthstoneIngot);
-		reg(ItemRegister.itemMysticalOrb);
-		reg(ItemRegister.itemPlagueEssence);
-		reg(ItemRegister.itemPlagueCore);
-		reg(ItemRegister.itemBlazingCore);
-		reg(ItemRegister.itemSword);
-		reg(ItemRegister.itemFyrestoneCatalyst);
+		for(Item item : ItemRegister.registeredItems)
+		{
+			reg(item);
+		}
 		
 		for (EnumShardType type : EnumShardType.values())
 		{
