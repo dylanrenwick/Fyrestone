@@ -1,5 +1,7 @@
 package com.skidsdev.fyrestone.item;
 
+import java.util.List;
+
 import com.skidsdev.fyrestone.Fyrestone;
 import com.skidsdev.fyrestone.client.gui.GuiGuideBook;
 import com.skidsdev.fyrestone.container.ContainerGuideBook;
@@ -31,11 +33,18 @@ public class ItemGuideBook extends BaseItem implements IOpenableGUI
 		
 		return ActionResult.newResult(EnumActionResult.PASS, stack);
 	}
+	
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+	{
+		tooltip.add("This book is a little scorched around");
+		tooltip.add("the edges, but most of the knowledge");
+		tooltip.add("it contains seems to be intact.");
+	}
 
 	@Override
 	public Gui getClientGuiElement(int id, EntityPlayer player, World worldIn, BlockPos pos)
 	{
-		return new GuiGuideBook(player);
+		return new GuiGuideBook(player, player.getHeldItemMainhand());
 	}
 
 	@Override

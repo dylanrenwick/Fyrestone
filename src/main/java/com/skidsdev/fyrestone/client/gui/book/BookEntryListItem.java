@@ -1,6 +1,7 @@
 package com.skidsdev.fyrestone.client.gui.book;
 
 import java.awt.Color;
+import java.util.List;
 
 import com.skidsdev.fyrestone.client.gui.GuiGuideBook;
 
@@ -27,5 +28,23 @@ public class BookEntryListItem implements IBookEntry
 		Color color = Color.BLACK;
 		if (gui.isInRect(x, y, xSize, 16, mouseX, mouseY)) color = Color.DARK_GRAY;
 		gui.renderText(title, x + 16, y, color.getRGB());
+	}
+
+	@Override
+	public List<String> getMouseOverTooltip()
+	{
+		return null;
+	}
+
+	@Override
+	public boolean isMouseOver(GuiGuideBook gui, int mouseX, int mouseY)
+	{
+		return false;
+	}
+
+	@Override
+	public void mouseClicked(GuiGuideBook gui)
+	{
+		
 	}
 }
