@@ -20,14 +20,21 @@ import net.minecraft.util.math.AxisAlignedBB;
 
 public class TileEntityRitualCircle extends TileEntity implements ITickable
 {
+	private short ticks;
+	
 	public TileEntityRitualCircle()
 	{
 		super();
+		ticks = 0;
 	}
 
 	@Override
-	public void update() {
-		if (this.getWorld().getWorldTime() % 20 != 0 || this.getWorld().isRemote) return;
+	public void update()
+	{
+		ticks++;
+		if (ticks % 20 != 0 || this.getWorld().isRemote) return;
+		
+		ticks = 0;
 		
 		List<EntityItem> entities = this.getWorld().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.getX() - 1, pos.getY(), pos.getZ() - 1, pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1));
 		if (entities.size() > 0)
